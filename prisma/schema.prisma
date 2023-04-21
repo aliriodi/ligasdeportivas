@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+//https://www.prisma.io/docs/concepts/components/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+//Creando nombre de Base de DATOS
+datasource db {
+  provider = "sqlite"
+  url      = "file:./ligasdeportivas.db"
+}
+
+//Creando tabla de tabla de Ligas de Beisbol
+model Liga{
+  id int  @id @default(autoincrement())
+  String  name
+}
+
+//Creando Tabla de DIVISIOND de la Liga el 
+//idLiga es la clave foranea de Liga una liga
+//puede tener varias divisiones
+model Division {
+  id int  @id @default(autoincrement())
+  idLiga int
+  String nombre
+}
+
+
+//Se crea Tabla de usuarios
+// con rol usuario por defecto, se debe crear un usaer admin
+//este user admin va a tener poder para todo elevar otros admin
+//Hay que crear en Panel admin respaldo de la BD un dump 
+//porque en el deploy despues la base de dtaos no se va a poder
+//acceder por el back solo por el front y si se cae sin respaldo es triste
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  name      String?
+  role      Role     @default(USER)
+ }
+
+//Los roles de usuarios por defecto User
+enum Role {
+  USER
+  ADMIN
+}
+
+//Esta vino asi por defecto 
+model Contact {
+  id String @id @default(cuid())
+  firstname String
+  lastname String
+  email String
+}

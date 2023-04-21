@@ -7,7 +7,9 @@ http://localhost:3000/
 npm run dev
 
 -Base de Datos SQLITE
+
 -Nextjs como manejador de front y back simultaneo
+
 -Prisma como manejador de SCHEMAS adios a express
 
 

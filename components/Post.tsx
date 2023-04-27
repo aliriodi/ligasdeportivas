@@ -6,6 +6,7 @@ export type PostProps = {
   id: string;
   idPlayer:number;
   idTeam:number;
+  idDivision:number;
   firstname:string;
   lastname:string;
   title: string;

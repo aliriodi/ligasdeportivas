@@ -35,7 +35,7 @@ const Blog: React.FC<Props> = (props) => {
           {props.team.map(
             post => (
               <div key={post.idTeam}>Equipo:  {post.name}  
-                                  <p>Division: {props.division.length}</p>
+                                  <p>Division: { props.division.filter(element => element.idDivision ===  post.idDivision)[0].name }</p>
                {props.player.map((post2) => (
               post2.idTeam === post.idTeam ? 
             <div key={post2.idPlayer} className="post">

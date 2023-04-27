@@ -26,7 +26,7 @@ const Blog: React.FC<Props> = (props) => {
         <main>
           {props.feed.map((post) => (
             <div key={post.idPlayer} className="post">
-              <span>{post.idPlayer+"  "+post.firstname+" "+" "+post.lastname+" "+post.createdAt}</span>
+              <span>{post.idPlayer+"  "+post.firstname+" "+" "+post.lastname+" "}</span>
            </div>
           ))}
         </main>

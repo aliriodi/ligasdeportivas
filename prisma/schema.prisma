@@ -13,18 +13,19 @@ datasource db {
 }
 
 //Creando tabla de tabla de Ligas de Beisbol
-model Liga{
-  id int  @id @default(autoincrement())
-  String  name
+model League{
+  idLeague Int  @id @default(autoincrement())
+  name String
 }
+
 
 //Creando Tabla de DIVISIOND de la Liga el 
 //idLiga es la clave foranea de Liga una liga
 //puede tener varias divisiones
 model Division {
-  id int  @id @default(autoincrement())
-  idLiga int
-  String nombre
+  idDivision Int  @id @default(autoincrement())
+  idLiga Int
+  name String
 }
 
 
@@ -35,17 +36,130 @@ model Division {
 //porque en el deploy despues la base de dtaos no se va a poder
 //acceder por el back solo por el front y si se cae sin respaldo es triste
 model User {
-  id        Int      @id @default(autoincrement())
+  idUser        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   email     String   @unique
-  name      String?
-  role      Role     @default(USER)
+  name      String
+  role      Int
+ }
+//Por si se crean mas roles de usuario para 
+//fucniones especificas como cargar un solo juego o cosas asi
+ model Rol {
+  idRol Int @id @default(autoincrement())
+  name String  @unique
+ }
+ 
+ //El jugador posee todos los detalles  requeridos
+ //para su ubicacion
+ model Player {
+  idPlayer  Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  idTeam Int
+  firstname String
+  lastname String
+  picture String     //Cloudinary con esto
+  phone String
+  address String
+  email String
+  primary_position String
+  secudary_position String
+  third_position String
  }
 
-//Los roles de usuarios por defecto User
-enum Role {
-  USER
-  ADMIN
+//Para hacer seguimiento a jugadores destacados
+ model Observation {
+  idObservation  Int      @id @default(autoincrement())
+  idPlayer Int
+  createdAt DateTime @default(now())
+  Observation String
+
+ }
+
+//Posibles posicioines a cargar de un jugador en cualquier juego
+ model Position {
+  idPosition  Int      @id @default(autoincrement())
+  name_Short String
+  name_Full String
+ }
+
+//Modelo de Juego 1
+//Se refiere al resumen de la 1era tabla
+model Game {
+  idGame Int @id 
+  createdAt DateTime @default(now())
+  idTeam1 Int
+  Team1 String
+  idTeam2 Int
+  Team2 String
+  Date DateTime
+  quantityIning Int
+  quantityHits Int
+  quantityError Int
+  quantityQB Int
+}
+ //Campos a imprimir en la page resultados
+ //VB	CA 	HP 	CI 	BB 	SO 	DEB 	AL 	IJ 	AVE E
+model Result {
+  idResult Int      @id @default(autoincrement())
+  name String
+}
+
+//Equipo NombreJugador  JJ VB.VALOR 	CA 	HP 	CI 	BB 	SO 	DEB 	AL 	IJ 	AVE E
+ model ResultPlayer {
+  idResultPlayer Int      @id @default(autoincrement())
+  idGame Int
+  idResult Int
+  idPlayer Int
+  idTeam Int
+  value Int
+ }
+
+//Lista Sumario para idGame
+// Bateo:
+//H3: Jair Dilizio(1);
+//H2: Jassiel Salinas,2(8); Dylan Gallego(1);
+//CI: Jassiel Salinas,2(9); German Rondon(3); Liam Chivico(4); Cesar Calma(2); Dylan Gallego,2(6); Jair Dilizio,2(5); Enmanuel Rivas(1);
+//BD: Jesus Rivas(1);
+//Doble Play: Rivas, Batea para doble play Seco es puesto out en la 2B por la vía: 0-3.
+//Bateo:
+//H2: Andres Carmona(1); Adrian Medina(2); Carlos Ramirez(2);
+//CI: Matias Marcano,2(8); Andres Carmona(3); Adrian Medina(18); Carlos Ramirez(6); Ignacio Boada,2(7); Mauricio Meaño,2(4); 
+
+  model ResultAbstrac {
+  idAbstrac Int      @id @default(autoincrement())
+  idGame Int
+  name_Short String?
+  result String
+ }
+
+//Lista de arbitros para juego idGame
+ model TecnicalForm {
+  idTecnicalForm Int      @id @default(autoincrement())
+  idGame Int
+  refereesnameHome String
+  refereesname1B String
+  refereesname2B String
+  refereesname3B String
+ }
+ //El modelo equipo posee los id necesarios para
+ //hacer las tables relacinales respectivas
+model Team {
+  idTeam Int @id @default(autoincrement())
+  idLeague Int
+  idDivision Int
+  name String
+  picture String
+  }
+//Relacion entre Equipo y Jugador
+//con fecha de creacion para saber la evolucion del jugador en 
+//el momento requerido y saber que evolucion ha tenido
+model TeamPlayer{
+  idTeamPlayer Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  idTeam Int
+  idPlayer Int
+  idLiga Int
+  idUser Int
 }
 
 //Esta vino asi por defecto 
@@ -55,3 +169,4 @@ model Contact {
   lastname String
   email String
 }
+ 

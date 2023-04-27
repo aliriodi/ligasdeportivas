@@ -4,7 +4,14 @@ import ReactMarkdown from "react-markdown";
 
 export type PostProps = {
   id: string;
+  idPlayer:number;
+  firstname:string;
+  lastname:string;
   title: string;
+  idUser: number;
+  name:string;
+  email:string;
+  createdAt:string;
   author: {
     name: string;
     email: string;

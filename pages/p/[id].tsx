@@ -9,7 +9,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     id: "1",
     title: "Prisma is the perfect ORM for Next.js",
     content: "[Prisma](https://github.com/prisma/prisma) and Next.js go _great_ together!",
-    published: false,
+    published: true,
     author: {
       name: "Nikolas Burk",
       email: "burk@prisma.io",
@@ -19,6 +19,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     props: post,
   }
 }
+
+
+
 
 const Post: React.FC<PostProps> = (props) => {
   let title = props.title

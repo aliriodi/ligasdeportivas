@@ -8,16 +8,19 @@ export const getStaticProps: GetStaticProps = async () =>{
   const prisma = new PrismaClient()
   const player = await prisma.player.findMany();
   const team = await prisma.team.findMany();
+  const division = await prisma.division.findMany();
+  
     //console.log('feed son objetos dentro de array con length= ' +  feed.length);
   return {
     
-    props:  JSON.parse(JSON.stringify({player,team})) ,
+    props:  JSON.parse(JSON.stringify({player,team,division})) ,
   };
 };
 
 type Props = {
-  player: PostProps[];
-  team:PostProps[];
+  player:   PostProps[];
+  team:     PostProps[];
+  division: PostProps[];
 };
 
 const Blog: React.FC<Props> = (props) => {
@@ -32,7 +35,7 @@ const Blog: React.FC<Props> = (props) => {
           {props.team.map(
             post => (
               <div key={post.idTeam}>Equipo:  {post.name}  
-                                  <p>Division:</p>
+                                  <p>Division: {props.division.length}</p>
                {props.player.map((post2) => (
               post2.idTeam === post.idTeam ? 
             <div key={post2.idPlayer} className="post">

@@ -23,6 +23,8 @@ const Blog: React.FC<Props> = (props) => {
     <>
       <div className="page">
         <h1>Creado por Alirio</h1>
+        <p></p>
+        <div>Cantidad de jugadores cargados: {" "+props.feed.length}</div>
         <main>
           {props.feed.map((post) => (
             <div key={post.idPlayer} className="post">

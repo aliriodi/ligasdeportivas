@@ -6,7 +6,7 @@ import { PrismaClient } from '@prisma/client'
 
 export const getStaticProps: GetStaticProps = async () =>{
   const prisma = new PrismaClient()
-  const feed = await prisma.player.findMany();
+  const feed = await prisma.user.findMany();
     //console.log('feed son objetos dentro de array con length= ' +  feed.length);
   return {
     

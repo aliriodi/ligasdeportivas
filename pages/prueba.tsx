@@ -27,7 +27,7 @@ const Blog: React.FC<Props> = (props) => {
           <div>Cantidad de jugadores: {props.feed.length}</div>
           <p></p>
           {props.feed.map((post) => (
-            <div key={post.id} className="post">
+            <div key={post.idPlayer} className="post">
              
               <span>{post.idPlayer+"  "+post.firstname+" "+" "+post.lastname+" "}</span>
            </div>

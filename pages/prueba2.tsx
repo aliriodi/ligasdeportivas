@@ -6,16 +6,18 @@ import { PrismaClient } from '@prisma/client'
 
 export const getStaticProps: GetStaticProps = async () =>{
   const prisma = new PrismaClient()
-  const feed = await prisma.player.findMany();
+  const player = await prisma.player.findMany();
+  const team = await prisma.team.findMany();
     //console.log('feed son objetos dentro de array con length= ' +  feed.length);
   return {
     
-    props:  JSON.parse(JSON.stringify({feed})) ,
+    props:  JSON.parse(JSON.stringify({player,team})) ,
   };
 };
 
 type Props = {
-  feed: PostProps[];
+  player: PostProps[];
+  team:PostProps[];
 };
 
 const Blog: React.FC<Props> = (props) => {
@@ -24,14 +26,25 @@ const Blog: React.FC<Props> = (props) => {
       <div className="page">
         <h1>Creado por Alirio</h1>
         <p></p>
-        <div>Cantidad de jugadores cargados: {" "+props.feed.length}</div>
+        <div>Cantidad de jugadores cargados: {" "+props.player.length+" "} pertencientes a {" "+props.team.length} equipos</div>
         <p></p>
         <main>
-          {props.feed.map((post) => (
-            <div key={post.idPlayer} className="post">
-              <span>{post.idPlayer+"  "+post.firstname+" "+" "+post.lastname+" "}</span>
-           </div>
-          ))}
+          {props.team.map(
+            post => (
+              <div key={post.idTeam}>Equipo:  {post.name}  
+                                  <p>Division:</p>
+               {props.player.map((post2) => (
+              post2.idTeam === post.idTeam ? 
+            <div key={post2.idPlayer} className="post">
+              <span>{post2.idPlayer+"  "+post2.firstname+" "+" "+post2.lastname+" "}</span>
+            </div>
+             : null
+          ))}    <p></p>
+              </div>
+              
+              )
+          )}
+          
         </main>
       </div>
      

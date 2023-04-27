@@ -5,6 +5,7 @@ import ReactMarkdown from "react-markdown";
 export type PostProps = {
   id: string;
   idPlayer:number;
+  idTeam:number;
   firstname:string;
   lastname:string;
   title: string;

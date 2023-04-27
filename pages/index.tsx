@@ -6,7 +6,7 @@ import { PrismaClient } from '@prisma/client'
 
 export const getStaticProps: GetStaticProps = async () =>{
   const prisma = new PrismaClient()
-  const feed = await prisma.user.findMany();
+  const feed = await prisma.player.findMany();
     //console.log('feed son objetos dentro de array con length= ' +  feed.length);
   return {
     
@@ -26,7 +26,7 @@ const Blog: React.FC<Props> = (props) => {
         <main>
           {props.feed.map((post) => (
             <div key={post.id} className="post">
-              <span>{post.idUser+"  "+post.name+" "+" "+post.email+" "+post.createdAt}</span>
+              <span>{post.idPlayer+"  "+post.firstname+" "+" "+post.lastname+" "+post.createdAt}</span>
            </div>
           ))}
         </main>

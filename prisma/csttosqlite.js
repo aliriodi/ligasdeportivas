@@ -149,4 +149,4 @@ function cargarResultTeams(){
 //cargar resultados por jugador en la 
 //tabla Result 
 //hola(idTeam,archivo,0= crearUsuario || 1=Crear Resultado)
-hola(18,'25NEWASTROS18.csv',1);
+hola(27,'33JUVENCIOA27.csv',1);

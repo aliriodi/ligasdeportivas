@@ -57,18 +57,11 @@ const Blog: React.FC<Props> = (props) => {
                       </tr>
                       {/* Fila de Jugador mapeado nombre y datos  */}
                       {props.player.map((player) => (
-                  player.idTeam === post.idTeam ?<tr className="active"><td>{player.firstname +"  "+player.lastname}</td></tr>:null))}
-                       
-                                            
-
-                      {/* <!-- Aplicadas en las celdas (<td> o <th>) --> */}
-                      <tr>
-                        <th className="active">.A.</th>
-                        <td className="active">.A.</td>
-                        <td className="success">.B.</td>
-                        <td className="warning">.C.</td>
-                        <td className="danger">.D.</td>
-                      </tr>
+                  player.idTeam === post.idTeam ?<tr className="active"><td>{player.firstname +"  "+player.lastname}</td>
+                  {/* Mapeando los idResult primero, luego a la tabla  */}
+                                                                            {props.tiporesult.map(tiporesult => <td>{props.valueresult.filter(valueresult=>valueresult.idPlayer===player.idPlayer)[tiporesult.idResult-1]?
+                                                                             props.valueresult.filter(valueresult=>valueresult.idPlayer===player.idPlayer)[tiporesult.idResult-1].value:null}</td>)}</tr>:null))}
+                       {/* <!-- Aplicadas en las celdas (<td> o <th>) --> */}
                     </tbody>
                   </table>
                 </div>

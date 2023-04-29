@@ -39,15 +39,15 @@ const Blog: React.FC<Props> = (props) => {
 			
 				<li><a href="#">Servicios</a>
 					<ul>
-						<li><a href="#">Submenu1</a></li>
-						<li><a href="#">Submenu2</a></li>
-						<li><a href="#">Submenu3</a></li>
-						<li><a href="#">Submenu4</a>
+						<li><a href="#Submenu1">Submenu1</a></li>
+						<li><a href="#Submenu1">Submenu2</a></li>
+						<li><a href="#Submenu1">Submenu3</a></li>
+						<li><a href="#Submenu1">Submenu4</a>
 							<ul>
-								<li><a href="#">Submenu12</a></li>
-								<li><a href="#">Submenu22</a></li>
-								<li><a href="#">Submenu32</a></li>
-								<li><a href="#">Submenu42</a></li>
+								<li><a href="#Submenu1">Submenu12</a></li>
+								<li><a href="#Submenu1">Submenu22</a></li>
+								<li><a href="#Submenu1">Submenu32</a></li>
+								<li><a href="#Submenu1">Submenu42</a></li>
 							</ul>
 						</li>
 					</ul>

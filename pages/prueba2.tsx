@@ -58,7 +58,7 @@ const Blog: React.FC<Props> = (props) => {
 
       
       <div className="page">
-        <h1>Creado por Alirio</h1>
+        <h1>Creado por Equipo desarrollador ARQUICOM AJ</h1>
         <p></p>
         <div>Cantidad de jugadores cargados: {" "+props.player.length+" "} pertencientes a {" "+props.team.length} equipos</div>
         <p></p>

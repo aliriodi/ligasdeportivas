@@ -31,15 +31,7 @@ type Props = {
 const Blog: React.FC<Props> = (props) => {
   return (
     <>
-      <div className="topnav">
-           <a  href="#home">Home</a>
-           <a  href="#news">News</a>
-           <a  href="#contact">Contact</a>
-           <a  href="#about">About</a>
-      			
-      </div> 
-
-      
+        
       <div className="page">
         <h1>Creado por Alirio</h1>
         <p></p>

@@ -1,6 +1,6 @@
 import React from "react"
 import { GetStaticProps } from "next"
-import Layout from "../components/Layout"
+import Nav from "../components/Nav"
 import Post, { PostProps } from "../components/Post"
 import { PrismaClient } from '@prisma/client'
 
@@ -34,34 +34,9 @@ type Props = {
 const Blog: React.FC<Props> = (props) => {
   return (
     <>
-      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossOrigin="anonymous" ></link>
-      <div className="topnav">
-        <a href="#home">Home</a>
-        <a href="#news">News</a>
-        <a href="#contact">Contact</a>
-        <a href="#about">About</a>
-
-        <ul className="nav">
-          <li><a href="#">Servicios</a>
-            <ul>
-              <li><a href="#Submenu1">Submenu1</a></li>
-              <li><a href="#Submenu1">Submenu2</a></li>
-              <li><a href="#Submenu1">Submenu3</a></li>
-              <li><a href="#Submenu1">Submenu4</a>
-                <ul>
-                  <li><a href="#Submenu1">Submenu12</a></li>
-                  <li><a href="#Submenu1">Submenu22</a></li>
-                  <li><a href="#Submenu1">Submenu32</a></li>
-                  <li><a href="#Submenu1">Submenu42</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-
+      <Nav {...props} />
       <div className="page">
-        <h1>Creado por Equipo desarrollador ARQUICOM AJ</h1>
+        {/* <h1>Creado por Equipo desarrollador ARQUICOM AJ</h1> */}
         <p></p>
         <div>Cantidad de jugadores cargados: {" " + props.player.length + " "} pertencientes a {" " + props.team.length} equipos</div>
         <p></p>

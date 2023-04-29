@@ -31,23 +31,23 @@ const Blog: React.FC<Props> = (props) => {
   return (
     <>
       <div className="topnav">
-           {/* <a className="" href="#home">Home</a> */}
-           <a className="" href="#news">News</a>
-           <a className="" href="#contact">Contact</a>
-           <a className="" href="#about">About</a>
+           <a  href="#home">Home</a>
+           <a  href="#news">News</a>
+           <a  href="#contact">Contact</a>
+           <a  href="#about">About</a>
            <ul className="nav">
 			
-				<li><a href="">Servicios</a>
+				<li><a href="#">Servicios</a>
 					<ul>
-						<li><a href="">Submenu1</a></li>
-						<li><a href="">Submenu2</a></li>
-						<li><a href="">Submenu3</a></li>
-						<li><a href="">Submenu4</a>
+						<li><a href="#">Submenu1</a></li>
+						<li><a href="#">Submenu2</a></li>
+						<li><a href="#">Submenu3</a></li>
+						<li><a href="#">Submenu4</a>
 							<ul>
-								<li><a href="">Submenu12</a></li>
-								<li><a href="">Submenu22</a></li>
-								<li><a href="">Submenu32</a></li>
-								<li><a href="">Submenu42</a></li>
+								<li><a href="#">Submenu12</a></li>
+								<li><a href="#">Submenu22</a></li>
+								<li><a href="#">Submenu32</a></li>
+								<li><a href="#">Submenu42</a></li>
 							</ul>
 						</li>
 					</ul>

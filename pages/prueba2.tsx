@@ -4,6 +4,7 @@ import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
 import { PrismaClient } from '@prisma/client'
 
+
 export const getStaticProps: GetStaticProps = async () =>{
   const prisma = new PrismaClient()
   const league = await prisma.league.findMany();
@@ -35,7 +36,25 @@ const Blog: React.FC<Props> = (props) => {
            <a  href="#news">News</a>
            <a  href="#contact">Contact</a>
            <a  href="#about">About</a>
-               </div> 
+           <ul className="nav">
+			
+				<li><a href="#">Servicios</a>
+					<ul>
+						<li><a href="#Submenu1">Submenu1</a></li>
+						<li><a href="#Submenu1">Submenu2</a></li>
+						<li><a href="#Submenu1">Submenu3</a></li>
+						<li><a href="#Submenu1">Submenu4</a>
+							<ul>
+								<li><a href="#Submenu1">Submenu12</a></li>
+								<li><a href="#Submenu1">Submenu22</a></li>
+								<li><a href="#Submenu1">Submenu32</a></li>
+								<li><a href="#Submenu1">Submenu42</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+        </ul>
+      </div> 
 
       
       <div className="page">

@@ -7,10 +7,10 @@ import { PrismaClient } from '@prisma/client'
 export const getServerSideProps: GetServerSideProps = async () => {
   const prisma = new PrismaClient()
   const feed = await prisma.player.findMany();
-    //console.log('feed son objetos dentro de array con length= ' +  feed.length);
+  //console.log('feed son objetos dentro de array con length= ' +  feed.length);
   return {
-    
-    props:  JSON.parse(JSON.stringify({feed})) ,
+
+    props: JSON.parse(JSON.stringify({ feed })),
   };
 };
 
@@ -28,14 +28,12 @@ const Blog: React.FC<Props> = (props) => {
           <p></p>
           {props.feed.map((post) => (
             <div key={post.idPlayer} className="post">
-             
-              <span>{post.idPlayer+"  "+post.firstname+" "+" "+post.lastname+" "}</span>
-           </div>
+              <span>{post.idPlayer + "  " + post.firstname + " " + " " + post.lastname + " "}</span>
+            </div>
           ))}
         </main>
       </div>
-     
-   </>
+    </>
   );
 };
 

@@ -6,32 +6,17 @@ import { PrismaClient } from '@prisma/client'
 
 export const getStaticProps: GetStaticProps = async () =>{
   const prisma = new PrismaClient()
-  const player = await prisma.player.findMany();
-  const team = await prisma.team.findMany();
+  const league = await prisma.league.findMany();
   const division = await prisma.division.findMany();
+  const team = await prisma.team.findMany();
+  const player = await prisma.player.findMany();
   
 
-  //metricas de netlify
-  await fetch('https://graph.netlify.com/graphql?app_id=b83d3c66-7e5b-47e6-96b4-5ef3cc6f57b6&show_metrics=false',
-  {
-    method: 'POST',
-    body: JSON.stringify({
-      query: `query HelloNetlifyGraph {
-    helloGraph(sessionId: "b4ee97b4-ccce-4772-9fb2-70a3be57cf2b") {
-      welcome
-      about
-      whatToDoNext
-    }
-  }`,
-    }),
-  }
-)
-.then((r) => r.json())
-  //
+  
     //console.log('feed son objetos dentro de array con length= ' +  feed.length);
   return {
     
-    props:  JSON.parse(JSON.stringify({player,team,division})) ,
+    props:  JSON.parse(JSON.stringify({player,team,division,league})) ,
   };
 };
 
@@ -39,17 +24,45 @@ type Props = {
   player:   PostProps[];
   team:     PostProps[];
   division: PostProps[];
+  league:   PostProps[];
 };
 
 const Blog: React.FC<Props> = (props) => {
   return (
     <>
+      <div className="topnav">
+           {/* <a className="" href="#home">Home</a> */}
+           <a className="" href="#news">News</a>
+           <a className="" href="#contact">Contact</a>
+           <a className="" href="#about">About</a>
+           <ul className="nav">
+			
+				<li><a href="">Servicios</a>
+					<ul>
+						<li><a href="">Submenu1</a></li>
+						<li><a href="">Submenu2</a></li>
+						<li><a href="">Submenu3</a></li>
+						<li><a href="">Submenu4</a>
+							<ul>
+								<li><a href="">Submenu12</a></li>
+								<li><a href="">Submenu22</a></li>
+								<li><a href="">Submenu32</a></li>
+								<li><a href="">Submenu42</a></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+        </ul>
+      </div> 
+
+      
       <div className="page">
         <h1>Creado por Alirio</h1>
         <p></p>
         <div>Cantidad de jugadores cargados: {" "+props.player.length+" "} pertencientes a {" "+props.team.length} equipos</div>
         <p></p>
         <main>
+          {props.league.map(p=><span>{p.idLeague+" "+p.name}</span>)}
           {props.team.map(
             post => (
               <div key={post.idTeam}>Equipo:  {post.name}  

@@ -12,13 +12,16 @@ export const getStaticProps: GetStaticProps = async () => {
   const team = await prisma.team.findMany();
   const player = await prisma.player.findMany();
   const tiporesult = await prisma.result.findMany();
-  const valueresult = await prisma.resultPlayer.findMany();
-
-
-
+  const valueresult = await prisma.resultPlayer.findMany(
+                                   { orderBy: [{idResult: 'asc',}]});
   //console.log('feed son objetos dentro de array con length= ' +  feed.length);
   return {
-  props: JSON.parse(JSON.stringify({ player, team, division, league,tiporesult, valueresult})),
+    props: JSON.parse(JSON.stringify({ player,
+                                       team,
+                                       division, 
+                                       league, 
+                                       tiporesult, 
+                                       valueresult })),
   };
 };
 
@@ -57,11 +60,15 @@ const Blog: React.FC<Props> = (props) => {
                       </tr>
                       {/* Fila de Jugador mapeado nombre y datos  */}
                       {props.player.map((player) => (
-                  player.idTeam === post.idTeam ?<tr className="active"><td>{player.firstname +"  "+player.lastname}</td>
-                  {/* Mapeando los idResult primero, luego a la tabla  */}
-                                                                            {props.tiporesult.map(tiporesult => <td>{props.valueresult.filter(valueresult=>valueresult.idPlayer===player.idPlayer)[tiporesult.idResult-1]?
-                                                                             props.valueresult.filter(valueresult=>valueresult.idPlayer===player.idPlayer)[tiporesult.idResult-1].value:null}</td>)}</tr>:null))}
-                       {/* <!-- Aplicadas en las celdas (<td> o <th>) --> */}
+                        //Metodo de empezar a escribir una Fila por participante y en 1era coolumna su nombre
+                        player.idTeam === post.idTeam ? <tr className="active"><td>{player.firstname + "  " + player.lastname}</td>
+                          {/* Mapeando los idResult primero, luego a la tabla  */}
+                          {props.tiporesult.map(tiporesult => <td>{props.valueresult.filter(valueresult => valueresult.idPlayer === player.idPlayer)[tiporesult.idResult - 1] ?
+                                             
+                            props.valueresult.filter(valueresult => valueresult.idPlayer === player.idPlayer)[tiporesult.idResult - 1].value : null}</td>)}</tr> : null))}
+                                              {/* //metodo para ordenar el vector por id y se imprima bien */}
+                                              {/* sort((x, y) =>x.idResult >y.idResult?1:-1). */}
+                      {/* <!-- Aplicadas en las celdas (<td> o <th>) --> */}
                     </tbody>
                   </table>
                 </div>
@@ -74,7 +81,7 @@ const Blog: React.FC<Props> = (props) => {
                     </div>
                     : null
                 ))}    <p></p> */}
-                
+
               </div>
             )
           )}

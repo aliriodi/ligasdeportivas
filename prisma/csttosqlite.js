@@ -7,7 +7,9 @@ const {PrismaClient} = require('@prisma/client');
    fs.readFile(archivo, 'utf8', function (err, data) {
     //Convierto en Array por lineas por los enter
     let data2 =data.split(/\r?\n|\r/);
-    console.log(data2.length);
+    console.log('10 Longitud de data2'+data2.length);
+    console.log(data2)
+
     //Separo una linea en ARRAY separado por ,
  //   console.log(data2[1].split(','))
  //   console.log(typeof(data2[0].split(',')))
@@ -82,11 +84,15 @@ var now = today.toLocaleString();
   if(action===0){  crearUsuario(idequipo,data2[i].split(' ')[0],data2[i].split(' ')[1],'0','0','0','0','0','0','0',);}
   //   console.log(i+'Usuario creado')
   let data3 = data2[i].split(',');
-   console.log(data3[0])
 
+   console.log('86. longitud de data3: ' +data3.length)
+  console.log(data3)
      for(j=1;j<16;j++){
-  if(action===1) {  getIdPlayer(data3[0].split(' ')[0],data3[0].split(' ')[1],j,parseInt(data3[j]))}
-                      }
+  if(action===1) { 
+                console.log('92 datos getIdPlayer('+data3[0].split(' ')[0]+','+data3[0].split(' ')[1]+','+j+','+parseInt(data3[j])) 
+                getIdPlayer(data3[0].split(' ')[0],data3[0].split(' ')[1],j,parseInt(data3[j]));
+  }
+                 }
        console.log('Leyendo promesa')
     
     
@@ -134,7 +140,8 @@ function cargarResultTeams(){
          
          for(i=0;i<data2.length;i++)
          {
-            let data3 = data2[i].split(',');
+            
+            setTimeout(myMessage, 3000);
             Team(parseInt(data3[0]),parseInt(data3[1]),data3[2],'data3[4]')
          }  
    })
@@ -149,11 +156,11 @@ function cargarResultTeams(){
 //cargar resultados por jugador en la 
 //tabla Result 
 //hola(idTeam,archivo,0= crearUsuario || 1=Crear Resultado)
-hola(35,'41MELLIZOSA35.csv',1);
-hola(36,'42MELLIZOSB36.csv',1);
-hola(37,'43MELLIZOSC37.csv',1);
-hola(38,'44NEWASTROSA38.csv',1);
-hola(39,'45NEWASTROSB39.csv',1);
-hola(40,'46GIGANTES40.csv',1);
-hola(42,'47COCODA42.csv',1);
-hola(43,'48COCODB43.csv',1);
+//hola(50,'1COMtigritosA50.csv',1);
+hola(1,'8SABUESOS1.csv',1);
+// hola(37,'43MELLIZOSC37.csv',1);
+// hola(38,'44NEWASTROSA38.csv',1);
+// hola(39,'45NEWASTROSB39.csv',1);
+// hola(40,'46GIGANTES40.csv',1);
+// hola(42,'47COCODA42.csv',1);
+// hola(43,'48COCODB43.csv',1);

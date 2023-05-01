@@ -5,7 +5,7 @@ import Post, { PostProps } from "../components/Post"
 import { PrismaClient } from '@prisma/client'
 
 export const getStaticProps: GetStaticProps = async () => {
-    const prisma = new PrismaClient()
+    const prisma = new PrismaClient();
     //const feed = await prisma.user.findMany();
 
 
@@ -28,7 +28,7 @@ const Blog: React.FC<Props> = (props) => {
             <div className="topnav">
                 <a href="/">Resultados</a>
                 <a href="/router">Router Dario Salazar</a>
-                <a href="#contact">Contact</a>
+                <a href="/contact">Contacto</a>
                 <a href="#about">About</a>
             </div>
         </>

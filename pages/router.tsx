@@ -6,22 +6,66 @@ import { PrismaClient } from '@prisma/client'
 
 
 export const getStaticProps: GetStaticProps = async () => {
+    //Funcion para cargar usuarios controlados de la BD sin saturar 
+  //la busqueda
+  async function getdataBD(idDivision: number, idTeam: number) {
+    const prisma = new PrismaClient()
+    const league = await prisma.league.findMany();
+    const division = await prisma.division.findMany();
+
+    if (idDivision) {
+      const team = await prisma.team.findMany({
+        where: {
+          idDivision: idDivision,
+        },
+      });
+    }
+
+    if (idTeam) {
+      const player = await prisma.player.findMany({
+        where: {
+          idTeam: idTeam,
+        },
+      });
+      const tiporesult = await prisma.result.findMany();
+      const valueresult = await prisma.resultPlayer.findMany({
+        where: { idTeam: idTeam, },
+        orderBy: { idResult: 'asc', }
+      });
+    }
+  }
+  //Funcion para buscar de la BD los elementos de los Select 
   const prisma = new PrismaClient()
   const league = await prisma.league.findMany();
   const division = await prisma.division.findMany();
-  const team = await prisma.team.findMany();
-  const player = await prisma.player.findMany();
+
+  const team = await prisma.team.findMany({
+    where: {
+     // idDivision: 1,
+    },
+  });
+  const player = await prisma.player.findMany({
+    where: {
+     // idTeam: 0,
+    },
+  });
+
   const tiporesult = await prisma.result.findMany();
-  const valueresult = await prisma.resultPlayer.findMany(
-                                   { orderBy: [{idResult: 'asc',}]});
+  const valueresult = await prisma.resultPlayer.findMany({
+    //where: { idTeam: 0, },
+    orderBy: { idResult: 'asc', }
+  });
+  
   //console.log('feed son objetos dentro de array con length= ' +  feed.length);
   return {
-    props: JSON.parse(JSON.stringify({ player,
-                                       team,
-                                       division, 
-                                       league, 
-                                       tiporesult, 
-                                       valueresult })),
+    props: JSON.parse(JSON.stringify({
+      player,
+      team,
+      division,
+      league,
+      tiporesult,
+      valueresult,
+      })),
   };
 };
 
@@ -32,9 +76,10 @@ type Props = {
   league: PostProps[];
   tiporesult: PostProps[];
   valueresult: PostProps[];
-};
+   };
 
 const Blog: React.FC<Props> = (props) => {
+
   return (
     <>
       <Nav {...props} />
@@ -44,6 +89,14 @@ const Blog: React.FC<Props> = (props) => {
         <div>Cantidad de jugadores cargados: {" " + props.player.length + " "} pertencientes a {" " + props.team.length} equipos</div>
         <p></p>
         <main>
+          <p><button type="button"  className="btn btn-primary">Primary</button></p>
+         
+          <select className="custom-select" id="inputGroupSelect01" >
+            <option value="0">Liga</option>
+            <option value="1">Dario Salazar</option>
+            <option value="2">Liga 2</option>
+          </select>
+        
           {props.league.map(p => <span>{'Liga ' + p.idLeague + " " + p.name}</span>)}
           {props.team.map(
             post => (
@@ -64,10 +117,10 @@ const Blog: React.FC<Props> = (props) => {
                         player.idTeam === post.idTeam ? <tr className="active"><td>{player.firstname + "  " + player.lastname}</td>
                           {/* Mapeando los idResult primero, luego a la tabla  */}
                           {props.tiporesult.map(tiporesult => <td>{props.valueresult.filter(valueresult => valueresult.idPlayer === player.idPlayer)[tiporesult.idResult - 1] ?
-                                             
+
                             props.valueresult.filter(valueresult => valueresult.idPlayer === player.idPlayer)[tiporesult.idResult - 1].value : null}</td>)}</tr> : null))}
-                                              {/* //metodo para ordenar el vector por id y se imprima bien */}
-                                              {/* sort((x, y) =>x.idResult >y.idResult?1:-1). */}
+                      {/* //metodo para ordenar el vector por id y se imprima bien */}
+                      {/* sort((x, y) =>x.idResult >y.idResult?1:-1). */}
                       {/* <!-- Aplicadas en las celdas (<td> o <th>) --> */}
                     </tbody>
                   </table>

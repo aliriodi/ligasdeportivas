@@ -157,7 +157,7 @@ function cargarResultTeams(){
 //tabla Result 
 //hola(idTeam,archivo,0= crearUsuario || 1=Crear Resultado)
 //hola(50,'1COMtigritosA50.csv',1);
-hola(1,'8SABUESOS1.csv',1);
+hola(50,'1COMtigritosA50.csv',1);
 // hola(37,'43MELLIZOSC37.csv',1);
 // hola(38,'44NEWASTROSA38.csv',1);
 // hola(39,'45NEWASTROSB39.csv',1);

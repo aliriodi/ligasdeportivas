@@ -1,54 +1,46 @@
 import React from "react"
-import { useState } from 'react';
 import { GetStaticProps } from "next"
-import Nav from "../components/Nav"
-import Post, { PostProps } from "../components/Post"
-
-
+import Post, { PostProps } from "./Post"
 import { PrismaClient } from '@prisma/client'
-
-export  async function getdataBD(idDivision: number, idTeam: number) {
-  let prisma = new PrismaClient();
-  const league = await prisma.league.findMany();
-  const division = await prisma.division.findMany();
-
-  if (idDivision) {
-    const team = await prisma.team.findMany({
-      where: {
-        idDivision: idDivision,
-      },
-    });
-  }
-
-  if (idTeam) {
-    const player = await prisma.player.findMany({
-      where: {
-        idTeam: idTeam,
-      },
-    });
-    const tiporesult = await prisma.result.findMany();
-    const valueresult = await prisma.resultPlayer.findMany({
-      where: { idTeam: idTeam, },
-      orderBy: { idResult: 'asc', }
-    });
-  }
-}
-
-
 
 export const getStaticProps: GetStaticProps = async () => {
     //Funcion para cargar usuarios controlados de la BD sin saturar 
   //la busqueda
-      
+  
+  const a = async function getdataBD(idDivision: number, idTeam: number) {
+    const prisma = new PrismaClient()
+    const league = await prisma.league.findMany();
+    const division = await prisma.division.findMany();
+
+    if (idDivision) {
+      const team = await prisma.team.findMany({
+        where: {
+          idDivision: idDivision,
+        },
+      });
+    }
+
+    if (idTeam) {
+      const player = await prisma.player.findMany({
+        where: {
+          idTeam: idTeam,
+        },
+      });
+      const tiporesult = await prisma.result.findMany();
+      const valueresult = await prisma.resultPlayer.findMany({
+        where: { idTeam: idTeam, },
+        orderBy: { idResult: 'asc', }
+      });
+    }
+  }
 
   //Funcion para buscar de la BD los elementos de los Select 
   const prisma = new PrismaClient()
   const league = await prisma.league.findMany();
   const division = await prisma.division.findMany();
-
   const team = await prisma.team.findMany({
     where: {
-      idDivision: 1,
+      idDivision: 0,
     },
   });
   const player = await prisma.player.findMany({
@@ -72,7 +64,7 @@ export const getStaticProps: GetStaticProps = async () => {
       league,
       tiporesult,
       valueresult,
-      
+      a,
       })),
   };
 };
@@ -86,23 +78,23 @@ type Props = {
   valueresult: PostProps[];
 }
 const Blog: React.FC<Props> = (props) => {
-   return (
+  
+  return (
     <>
-      <Nav {...props} />
-      <div className="page">
+     <div className="page">
         {/* <h1>Creado por Equipo desarrollador ARQUICOM AJ</h1> */}
         <p></p>
         <div>Cantidad de jugadores cargados: {" " + props.player.length + " "} pertencientes a {" " + props.team.length} equipos</div>
         <p></p>
         <main>
-          <p><button type="button"  onClick={()=>getdataBD(1,1)} className="btn btn-primary">Primary</button></p>
-          <form>
-          <select className="custom-select" id="inputGroupSelect01" onChange={()=>alert(document.getElementById("inputGroupSelect01"))} >
+          {/* <p><button type="button"  onClick={()=>{a(1,1)}} className="btn btn-primary">Primary</button></p> */}
+         
+          <select className="custom-select" id="inputGroupSelect01" >
             <option value="0">Liga</option>
             <option value="1">Dario Salazar</option>
             <option value="2">Liga 2</option>
           </select>
-          </form>
+        
           {props.league.map(p => <span>{'Liga ' + p.idLeague + " " + p.name}</span>)}
           {props.team.map(
             post => (

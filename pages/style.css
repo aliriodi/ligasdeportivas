@@ -1,6 +1,13 @@
 .topnav {
+    margin-top: 0;
+    padding-top: 0;
     background-color: #333;
     overflow: hidden;
+    position: fixed;
+    text-align: right;
+    top: 0;
+    width: 100%;
+    /* z-index: 1000; */
   }
   
   /* Style the links inside the navigation bar */
@@ -69,4 +76,13 @@ ul desplegable
 .nav li ul li ul {
     right:-105px;
     top:60px;
+}
+
+.center {
+  margin: auto;
+  text-align: center;
+}
+
+.page{
+ padding-top: 50px;
 }

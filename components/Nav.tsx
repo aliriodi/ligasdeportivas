@@ -32,7 +32,7 @@ const Blog: React.FC<Props> = (props) => {
                 <a href="/">Equipos</a>
                 <a href="/posiciones">Posiciones</a>
                 <a href="/resultados">Resultados</a>
-                <a href="/estadisticas">Estadistcas</a>
+                <a href="/estadisticas">Estadisticas</a>
                 <a href="/router">Router Dario Salazar</a>
                 <a href="/contact">Contacto</a>
                 {/* <a href="#about">About</a> */}

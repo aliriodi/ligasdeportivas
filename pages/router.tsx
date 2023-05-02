@@ -17,6 +17,7 @@ export  async function getdataBD(idDivision: number, idTeam: number) {
       where: {
         idDivision: idDivision,
       },
+      orderBy: { name:'asc', }
     });
   }
 
@@ -25,6 +26,7 @@ export  async function getdataBD(idDivision: number, idTeam: number) {
       where: {
         idTeam: idTeam,
       },
+      
     });
     const tiporesult = await prisma.result.findMany();
     const valueresult = await prisma.resultPlayer.findMany({
@@ -48,12 +50,13 @@ export const getStaticProps: GetStaticProps = async () => {
 
   const team = await prisma.team.findMany({
     where: {
-      idDivision: 1,
+     // idDivision: 1,
     },
+    orderBy: { name:'asc', }
   });
   const player = await prisma.player.findMany({
     where: {
-      idTeam: 2,
+    //  idTeam: 2,
     },
   });
 
@@ -86,6 +89,8 @@ type Props = {
   valueresult: PostProps[];
 }
 const Blog: React.FC<Props> = (props) => {
+  const [IDTEAM, setIDTEAM] = useState(0);
+  const [IDDIVISION, setIDDIVISION] = useState(0);
    return (
     <>
       <Nav {...props} />
@@ -95,16 +100,29 @@ const Blog: React.FC<Props> = (props) => {
         <div>Cantidad de jugadores cargados: {" " + props.player.length + " "} pertencientes a {" " + props.team.length} equipos</div>
         <p></p>
         <main>
-          <p><button type="button"  onClick={()=>getdataBD(1,1)} className="btn btn-primary">Primary</button></p>
+          {/* <p><button type="button"  onClick={()=>setIDTEAM(IDTEAM===50?0:IDTEAM+1)} className="btn btn-primary">Primary</button></p> */}
+          {props.league.map(p => <span>{'Liga ' + p.idLeague + " " + p.name}</span>)}
+          <p>{IDTEAM}{IDDIVISION}</p>
           <form>
-          <select className="custom-select" id="inputGroupSelect01" onChange={()=>alert(document.getElementById("inputGroupSelect01"))} >
-            <option value="0">Liga</option>
-            <option value="1">Dario Salazar</option>
-            <option value="2">Liga 2</option>
+          <select className="custom-select" id="input2" onChange={()=>setIDDIVISION(parseInt((document.getElementById("input2")as HTMLInputElement).value)) } >
+            <option value="0">Seleccione Division</option>
+            {props.division.map(
+              division => <option value={division.idDivision}>{division.name}</option>
+            )}
+            
+          </select>
+                                                                           {/* JS = parseInt(document.getElementById("input1").value))  */}
+          <select className="custom-select" id="input1" onChange={()=>setIDTEAM(parseInt((document.getElementById("input1")as HTMLInputElement).value)) } >
+            <option value="0">Seleccione Equipo</option>
+            {props.team.map(
+              team0 => team0.idDivision===IDDIVISION?<option value={team0.idTeam}>{team0.name}</option>:null
+                       
+            )}
+            
           </select>
           </form>
-          {props.league.map(p => <span>{'Liga ' + p.idLeague + " " + p.name}</span>)}
-          {props.team.map(
+         
+          {props.team.filter(team0 => team0.idTeam ===IDTEAM).map(
             post => (
               <div key={post.idTeam}>Equipo:  {post.name}
                 <p>Division: {props.division.filter(element => element.idDivision === post.idDivision)[0].name}</p>

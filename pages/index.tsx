@@ -108,17 +108,17 @@ const Blog: React.FC<Props> = (props) => {
           {/* <p>{IDTEAM}{IDDIVISION}</p> */}
           <form className="custom-form">
           <select className="custom-select" id="input2" onChange={()=>setIDDIVISION(parseInt((document.getElementById("input2")as HTMLInputElement).value)) } >
-            <option value="0">Seleccione Division</option>
+            <option key={0} value="0">Seleccione Division</option>
             {props.division.map(
-              division => <option value={division.idDivision}>{division.name}</option>
+              division => <option key={division.idDivision} value={division.idDivision}>{division.name}</option>
             )}
               
           </select>
-           <></>                                        {/* JS = parseInt(document.getElementById("input1").value))  */}
+           <>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</>                                        {/* JS = parseInt(document.getElementById("input1").value))  */}
           <select className="custom-select" id="input1" onChange={()=>setIDTEAM(parseInt((document.getElementById("input1")as HTMLInputElement).value)) } >
-            <option value="0">Seleccione Equipo</option>
+            <option key='0' value="0">Seleccione Equipo</option>
             {props.team.map(
-              team0 => team0.idDivision===IDDIVISION?<option value={team0.idTeam}>{team0.name}</option>:null
+              team0 => team0.idDivision===IDDIVISION?<option key={team0.idTeam} value={team0.idTeam}>{team0.name}</option>:null
                        
             )}
             

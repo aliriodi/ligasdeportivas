@@ -1,3 +1,10 @@
+.logo{
+  transition: transform .6s ease-in-out;
+}
+.logo:hover{
+  transform: rotate(360deg);
+}
+
 .topnav {
     margin-top: 0;
     padding-top: 0;

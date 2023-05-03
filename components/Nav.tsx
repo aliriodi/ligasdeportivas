@@ -1,9 +1,11 @@
 import React from "react"
 import Head from "next/head"
+import Image from 'next/image'
 import { GetStaticProps } from "next"
 import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
 import { PrismaClient } from '@prisma/client'
+import logohome from '../images/baseball-icon-388.png'
 
 export const getStaticProps: GetStaticProps = async () => {
     const prisma = new PrismaClient();
@@ -32,6 +34,7 @@ const Blog: React.FC<Props> = (props) => {
                 <a href="/">Equipos</a>
                 <a href="/posiciones">Posiciones</a>
                 <a href="/resultados">Resultados</a>
+                <a href="/"><Image className="logo" src={logohome} height="35" width="45" alt="Home"/></a>
                 <a href="/estadisticas">Estadisticas</a>
                 <a href="/router">Router Dario Salazar</a>
                 <a href="/contact">Contacto</a>

@@ -4,6 +4,11 @@
 .logo:hover{
   transform: rotate(360deg);
 }
+.logoHome{
+  z-index: -1;
+  height: 94px;
+  width: 100px;
+}
 
 .topnav {
     margin-top: 0;
@@ -39,6 +44,20 @@
     color: white;
   }
 
+  .flex-container{
+    display:flex;
+  }
+  .flex-item{
+    display: flex;
+    align-items: center;
+  }
+  .flex-item-content {
+    flex: 1;
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 /* 
 ul desplegable
 */

@@ -41,33 +41,39 @@ export async function getdataBD(idDivision: number, idTeam: number) {
 
 
 export const getStaticProps: GetStaticProps = async () => {
-  //Funcion para cargar usuarios controlados de la BD sin saturar 
-  //la busqueda
+  // //Funcion para cargar usuarios controlados de la BD sin saturar 
+  // //la busqueda
 
-  let prisma: PrismaClient;
-  //Funcion para buscar de la BD los elementos de los Select 
-  if (prisma !== null) { prisma = new PrismaClient() }
-  const league = await prisma.league.findMany();
-  const division = await prisma.division.findMany();
-  const team = await prisma.team.findMany({
-    where: {
-      // idDivision: 1,
-    },
-    orderBy: { name: 'asc', }
-  });
-  const player = await prisma.player.findMany({
-    where: {
-      //  idTeam: 2,
-    },
-  });
+  // let prisma: PrismaClient;
+  // //Funcion para buscar de la BD los elementos de los Select 
+  // if (prisma !== null) { prisma = new PrismaClient() }
+  // const league = await prisma.league.findMany();
+  // const division = await prisma.division.findMany();
+  // const team = await prisma.team.findMany({
+  //   where: {
+  //     // idDivision: 1,
+  //   },
+  //   orderBy: { name: 'asc', }
+  // });
+  // const player = await prisma.player.findMany({
+  //   where: {
+  //     //  idTeam: 2,
+  //   },
+  // });
 
-  const tiporesult = await prisma.result.findMany();
-  const valueresult = await prisma.resultPlayer.findMany({
-    //where: { idTeam: 0, },
-    orderBy: { idResult: 'asc', }
-  });
+  // const tiporesult = await prisma.result.findMany();
+  // const valueresult = await prisma.resultPlayer.findMany({
+  //   //where: { idTeam: 0, },
+  //   orderBy: { idResult: 'asc', }
+  // });
 
   //console.log('feed son objetos dentro de array con length= ' +  feed.length);
+  const player =[];
+  const team = [];
+  const division = [];
+  const league = [];
+  const tiporesult = [];
+  const valueresult = [];
   return {
     props: JSON.parse(JSON.stringify({
       player,
@@ -78,6 +84,7 @@ export const getStaticProps: GetStaticProps = async () => {
       valueresult,
     })),
   };
+ 
 };
 
 type Props = {

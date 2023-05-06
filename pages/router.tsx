@@ -119,9 +119,7 @@ const Blog: React.FC<Props> = (props) => {
             <option key='0' value="0">Seleccione Equipo</option>
             {props.team.map(
               team0 => team0.idDivision===IDDIVISION?<option key={team0.idTeam} value={team0.idTeam}>{team0.name}</option>:null
-                       
-            )}
-            
+             )}
           </select>
           </form>
           </div>

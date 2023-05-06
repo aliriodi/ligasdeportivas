@@ -118,11 +118,7 @@ const Blog: React.FC<Props> = (props) => {
             <table className="table table-hover">
               <tbody>
                 {/* <!-- Aplicadas en las filas --> */}
-                <tr>
-                  <th ></th>
-                  <th> </th>
-                </tr>
-                <tr>
+                          <tr>
                   <td className="center">TIGRITOS</td>
                   <td className="center">CAPITANES</td>
                 </tr>

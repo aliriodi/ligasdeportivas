@@ -88,9 +88,11 @@ model Game {
   idGame Int @id 
   createdAt DateTime @default(now())
   idTeam1 Int
-  Team1 String
+  CTeam1 Int
   idTeam2 Int
-  Team2 String
+  CTeam2 Int
+  GroupG String
+  Location String
   Date DateTime
   quantityIning Int
   quantityHits Int

@@ -20,7 +20,7 @@ const {PrismaClient} = require('@prisma/client');
     //console.log(typeof(stream))
     console.log('abriendo conexion a Base de Datos');
     const prisma = new PrismaClient();
-//  funcion Crear usuario enbase de datos
+//  funcion Crear JUGADOR enbase de datos
     async function crearUsuario(idTeam,firstname ,lastname,picture,phone,address,
         email,primary_position,secundary_position,third_position,createdAt)
          {
@@ -140,14 +140,83 @@ function cargarResultTeams(){
          
          for(i=0;i<data2.length;i++)
          {
-            
-            setTimeout(myMessage, 3000);
             Team(parseInt(data3[0]),parseInt(data3[1]),data3[2],'data3[4]')
          }  
    })
 }
 
+function cargarGame(archivo){
+   console.log('Programa para cargar Game table desde: '+archivo)
+   fs.readFile(archivo, 'utf8', function (err, data){
+       //Convierto en Array por lineas por los enter
+       let data2 =data.split(/\r?\n|\r/);
+       console.log('Linea 155 csttosqlite.js: Longitud de data2[]: '+data2.length);
+       //console.log(data2)
+       console.log('E1=Home E2=Visitante')
+       console.log(data2.map(data =>
+                   'E1: '+ data.split(',')[2]+
+                 '  CE1: '+data.split(',')[3]+
+                  ' E2: '+data.split(',')[4]+
+                  ' CE2: '+data.split(',')[5]+
+                  ' Liga: '+data.split(',')[6]+
+                  ' Group: '+data.split(',')[7]+
+                  ' Hora: '+data.split(',')[8]+
+                  ' Location: '+data.split(',')[9]))  
+   
+   //Creando conexion a BD   
+   const prisma = new PrismaClient();
+   //creando juego en BD prisma
+   async function GameCreate(idTeam1, CTeam1, idTeam2,CTeam2,Date,GroupG)
+   { const GameCreate = await prisma.game.create({
+     data: {
+      idTeam1:idTeam1,
+      CTeam1:CTeam1,
+      idTeam2:idTeam2,
+      CTeam2:CTeam2,
+      GroupG:GroupG,
+      Date:Date,
+  },
+}).catch(console.error).finally(() => prisma.$disconnect())}
+for(let i =2; i<data2.length;i++){
+   //'E1: '+ data2[i].split(',')[2]
+   //Equipo 1 proviene de la linea i de data2
+   //separados por , la 2da posicion
+   
+   // console.log('E1: '+ data2[i].split(',')[2]+
+   // '  CE1: '+data2[i].split(',')[3]+
+   //  ' E2: '+data2[i].split(',')[4]+
+   //  ' CE2: '+data2[i].split(',')[5]+
+   //  ' idDivision: '+data2[i].split(',')[6]+
+   //  ' Group: '+data2[i].split(',')[7]+
+   //  ' Hora: '+data2[i].split(',')[8]+
+   //  ' Location: '+data2[i].split(',')[9])
 
+  async function getIdTeam(idDivision, name){
+    const prisma = new PrismaClient();
+    const team = await prisma.team.findFirst({
+      where: {
+        idDivision:parseInt(idDivision) ,
+        name:name,
+      },
+    }).then(response=> { console.log('idDivision: '+idDivision+' name: '+name)
+                         console.log(response)})
+    //.then(response => console.log(response? response.idPlayer+' '+ response.firstname +' '+ response.lastname:null))
+ .catch(console.error).finally(() => prisma.$disconnect())
+ return team;
+   }
+   getIdTeam(data2[i].split(',')[6],data2[i].split(',')[2])
+   getIdTeam(data2[i].split(',')[6],data2[i].split(',')[4])
+  
+    
+   //  GameCreate(data2[i].split(',')[2],
+   //             data2[i].split(',')[3],
+   //             data2[i].split(',')[4],
+   //             data2[i].split(',')[5],
+   //             4/27/2023,data2[i].split(',')[7])
+           }
+  })
+ 
+}
 
 //cargarResultTeams();
 
@@ -157,10 +226,12 @@ function cargarResultTeams(){
 //tabla Result 
 //hola(idTeam,archivo,0= crearUsuario || 1=Crear Resultado)
 //hola(50,'1COMtigritosA50.csv',1);
-hola(51,'51TIGRITOSA50.csv',1);
+//hola(51,'51TIGRITOSA50.csv',1);
 // hola(37,'43MELLIZOSC37.csv',1);
 // hola(38,'44NEWASTROSA38.csv',1);
 // hola(39,'45NEWASTROSB39.csv',1);
 // hola(40,'46GIGANTES40.csv',1);
 // hola(42,'47COCODA42.csv',1);
 // hola(43,'48COCODB43.csv',1);
+//Esta funcion es diseñada para cargar Games
+cargarGame('Game.csv')

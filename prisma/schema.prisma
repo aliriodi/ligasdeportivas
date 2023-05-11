@@ -85,7 +85,7 @@ model User {
 //Modelo de Juego 1
 //Se refiere al resumen de la 1era tabla
 model Game {
-  idGame Int @id 
+  idGame Int @id  @default(autoincrement())
   createdAt DateTime @default(now())
   idTeam1 Int
   CTeam1 Int

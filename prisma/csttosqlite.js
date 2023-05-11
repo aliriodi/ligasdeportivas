@@ -1,5 +1,6 @@
 const fs = require("fs");
 const {PrismaClient} = require('@prisma/client');
+const { parse } = require('date-fns');
 
  function hola(idequipo, archivo,action){
     console.log('Programa para cargar csv a SQLITE')
@@ -166,7 +167,7 @@ function cargarGame(archivo){
    //Creando conexion a BD   
    const prisma = new PrismaClient();
    //creando juego en BD prisma
-   async function GameCreate(idTeam1, CTeam1, idTeam2,CTeam2,Date,GroupG)
+   async function GameCreate(idTeam1, CTeam1, idTeam2,CTeam2,Date,GroupG,Location)
    { const GameCreate = await prisma.game.create({
      data: {
       idTeam1:idTeam1,
@@ -175,6 +176,11 @@ function cargarGame(archivo){
       CTeam2:CTeam2,
       GroupG:GroupG,
       Date:Date,
+      Location:Location,
+      quantityIning:9,
+      quantityHits:0,
+      quantityError:0,
+      quantityQB:0,
   },
 }).catch(console.error).finally(() => prisma.$disconnect())}
 for(let i =2; i<data2.length;i++){
@@ -192,27 +198,47 @@ for(let i =2; i<data2.length;i++){
    //  ' Location: '+data2[i].split(',')[9])
 
   async function getIdTeam(idDivision, name){
+    idDivision=='COMPOTA'?idDivision=1:null;
+    idDivision=='PREPARATORIO'?idDivision=2:null;
+    idDivision=='PREINFANTIL'?idDivision=3:null;
+    idDivision=='INFANTIL'?idDivision=4:null;
+    idDivision=='JUNIOR'?idDivision=5:null;
+
     const prisma = new PrismaClient();
     const team = await prisma.team.findFirst({
       where: {
         idDivision:parseInt(idDivision) ,
         name:name,
       },
-    }).then(response=> { console.log('idDivision: '+idDivision+' name: '+name)
-                         console.log(response)})
+    }).then(response=> response.idTeam)
     //.then(response => console.log(response? response.idPlayer+' '+ response.firstname +' '+ response.lastname:null))
  .catch(console.error).finally(() => prisma.$disconnect())
  return team;
    }
    getIdTeam(data2[i].split(',')[6],data2[i].split(',')[2])
-   getIdTeam(data2[i].split(',')[6],data2[i].split(',')[4])
+   .then( response1 => getIdTeam(data2[i].split(',')[6],data2[i].split(',')[4])
+                    //concateno promesas para traerme solo los ID de equipo
+                    // y luego debo escribir el game de acuerdo a resultados con otra promesa
+                    //a declarar
+                    .then(response2 => 
+                     //abro codigo escribir BDGAME
+                     {console.log(i+'  response 1: '+response1 + ' response 2: '+response2)
+                      console.log('Cargando')
+                      GameCreate(response1,parseInt(data2[i].split(',')[3]),
+                                 response2,parseInt(data2[i].split(',')[5]),
+                                 parse('04/30/2023','MM/dd/yyyy' , new Date()) ,
+                                 data2[i].split(',')[7],
+                                 data2[i].split(',')[9])
+                  
+                 } 
+                  //cierro codigo escribir BDGAME
+   ))
   
-    
-   //  GameCreate(data2[i].split(',')[2],
-   //             data2[i].split(',')[3],
-   //             data2[i].split(',')[4],
-   //             data2[i].split(',')[5],
-   //             4/27/2023,data2[i].split(',')[7])
+      // GameCreate(data2[i].split(',')[2],
+      //          data2[i].split(',')[3],
+      //          data2[i].split(',')[4],
+      //          data2[i].split(',')[5],
+      //          4/28/2023,data2[i].split(',')[7])
            }
   })
  
@@ -234,4 +260,4 @@ for(let i =2; i<data2.length;i++){
 // hola(42,'47COCODA42.csv',1);
 // hola(43,'48COCODB43.csv',1);
 //Esta funcion es diseñada para cargar Games
-cargarGame('Game.csv')
+cargarGame('Game4.csv')

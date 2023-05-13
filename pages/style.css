@@ -109,5 +109,10 @@ ul desplegable
   text-align: center;
 }
 .page{
- padding-top: 120px;
+ padding-top: 80px;
 }
+ @media (max-width: 500px )or (max-height: 300px) {
+  .page {
+     padding-top: 150px;
+  } 
+} 

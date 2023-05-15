@@ -227,7 +227,7 @@ for(let i =2; i<data2.length;i++){
                       console.log('Cargando')
                       GameCreate(response1,parseInt(data2[i].split(',')[3]),
                                  response2,parseInt(data2[i].split(',')[5]),
-                                 parse('05/06/2023','MM/dd/yyyy' , new Date()) ,
+                                 parse('05/07/2023','MM/dd/yyyy' , new Date()) ,
                                  data2[i].split(',')[7],
                                  data2[i].split(',')[9])
                   
@@ -257,4 +257,4 @@ for(let i =2; i<data2.length;i++){
 // hola(42,'47COCODA42.csv',1);
 // hola(43,'48COCODB43.csv',1);
 //Esta funcion es diseñada para cargar Games
-cargarGame('Game7.csv')
+cargarGame('Game8.csv')

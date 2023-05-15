@@ -128,7 +128,7 @@ const Blog: React.FC<Props> = (props) => {
             post => (
               <div key={post.idTeam}>Equipo:  {post.name}
                 <p>Division: {props.division.filter(element => element.idDivision === post.idDivision)[0].name}</p>
-                <div>
+                <div key={post.idTeam}>
                   <table className="table table-hover">
                     <tbody>
                       {/* <!-- Aplicadas en las filas --> */}

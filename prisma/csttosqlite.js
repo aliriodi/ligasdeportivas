@@ -202,8 +202,8 @@ for(let i =2; i<data2.length;i++){
     idDivision=='PREPARATORIO'?idDivision=2:null;
     idDivision=='PREINFANTIL'?idDivision=3:null;
     idDivision=='INFANTIL'?idDivision=4:null;
-    idDivision=='PREINFANTIL'?idDivision=5:null;
-    idDivision=='INFNTIL'?idDivision=6:null;
+    idDivision=='PREJUNIOR'?idDivision=5:null;
+    idDivision=='INFANTIL'?idDivision=6:null;
 
     const prisma = new PrismaClient();
     const team = await prisma.team.findFirst({
@@ -227,7 +227,7 @@ for(let i =2; i<data2.length;i++){
                       console.log('Cargando')
                       // GameCreate(response1,parseInt(data2[i].split(',')[3]),
                       //            response2,parseInt(data2[i].split(',')[5]),
-                      //            parse('05/07/2023','MM/dd/yyyy' , new Date()) ,
+                      //            parse('05/05/2023','MM/dd/yyyy' , new Date()) ,
                       //            data2[i].split(',')[7],
                       //            data2[i].split(',')[9])
                   
@@ -235,11 +235,7 @@ for(let i =2; i<data2.length;i++){
                   //cierro codigo escribir BDGAME
    ))
   
-      // GameCreate(data2[i].split(',')[2],
-      //          data2[i].split(',')[3],
-      //          data2[i].split(',')[4],
-      //          data2[i].split(',')[5],
-      //          5/28/2023,data2[i].split(',')[7])
+   
            }
   })
  

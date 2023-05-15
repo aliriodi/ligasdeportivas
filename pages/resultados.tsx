@@ -55,26 +55,27 @@ type Props = {
 
 const Blog: React.FC<Props> = (props) => {
   return (
-    <>
+    <div >
       <Nav {...props} />
-      <div className="page">
-        <main>
+      <div  className="page">
+        <main >
 
           {props.user.map((post) => (
             <div key={post.id} className="post">
-              <span>{post.idPlayer + "  " + post.firstname + " " + " " + post.lastname + " " + post.createdAt}</span>
+              <span key={post.id}>{post.idPlayer + "  " + post.firstname + " " + " " + post.lastname + " " + post.createdAt}</span>
             </div>
           ))}
-          <p></p><div className="center">
+          <p></p><div key={0} className="center">
           <h1 > <p >Liga Dario Salazar </p></h1></div>
          
+         
           { props.fecha.map(f=>
-          <>
+          <div key={f}>
           <h2><p>Resultados {new Date(f).getDate()+' /'} {new Date(f).getMonth()+1}{' / '+new Date(f).getFullYear()}</p></h2>
           <table className="table table-hover">
-             <tbody>
+             <tbody >
                    {/* <!-- Aplicadas en las filas --> */}
-                   <tr >
+                   <tr key={0}>
                 <th >Categoria</th>
                 <th >Home</th>
                 <th >Carreras Home</th>
@@ -84,9 +85,9 @@ const Blog: React.FC<Props> = (props) => {
               </tr>
               {
             props.game.map((post) => (
-            <>{f===new Date(post.Date).getTime()?
+            < >{f===new Date(post.Date).getTime()?
               
-              <tr>
+              <tr key={post.idGame}>
               <td>{props.team.find(t=>t.idTeam===post.idTeam1)?
                   props.division.find(d=>d.idDivision===props.team.find(t=>t.idTeam===post.idTeam1).idDivision).name:null}  </td>
               <td>{props.team.find(t=>t.idTeam===post.idTeam1)?props.team.find(t=>t.idTeam===post.idTeam1).name:null}</td>
@@ -100,13 +101,13 @@ const Blog: React.FC<Props> = (props) => {
           }
           </tbody>
           </table>
-          </> )}
+          </div> )}
           
          
         </main>
       </div>
 
-    </>
+    </div>
   );
 };
 export default Blog

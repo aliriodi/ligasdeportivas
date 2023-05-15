@@ -202,7 +202,8 @@ for(let i =2; i<data2.length;i++){
     idDivision=='PREPARATORIO'?idDivision=2:null;
     idDivision=='PREINFANTIL'?idDivision=3:null;
     idDivision=='INFANTIL'?idDivision=4:null;
-    idDivision=='JUNIOR'?idDivision=5:null;
+    idDivision=='PREINFANTIL'?idDivision=5:null;
+    idDivision=='INFNTIL'?idDivision=6:null;
 
     const prisma = new PrismaClient();
     const team = await prisma.team.findFirst({

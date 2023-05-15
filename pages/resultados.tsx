@@ -3,20 +3,52 @@ import { GetStaticProps } from "next"
 import Nav from "../components/Nav"
 import Post, { PostProps } from "../components/Post"
 import { PrismaClient } from '@prisma/client'
+import { access } from "fs"
 
 export const getStaticProps: GetStaticProps = async () => {
   const prisma = new PrismaClient()
-  const feed = await prisma.user.findMany();
-
+  const team = await prisma.team.findMany();
+  const user = await prisma.user.findMany();
+  const league = await prisma.league.findMany();
+  const division = await prisma.division.findMany();
+  const game = await prisma.game.findMany({
+    orderBy: { Date:'desc', }
+  }
+  )
+  /* Como esta promesa me dio problemas al retornar lo hice directamente 
+  en el returnn del front
+  .then(response => response.map(e=> // Del arreglo de juegos se mapea en los equipos
+                                      // para sacar el nombre de los equipos y se anexa al juego
+                                      //para renderizar luego el=OBJ de equipo e=OBJ de juego
+                                       {team.find(el=>el.idTeam===e.idTeam1)?e['team1name']=team.find(el=>el.idTeam===e.idTeam1).name:null ;
+                                       team.find(el=>el.idTeam===e.idTeam2)?e['team2name']=team.find(el=>el.idTeam===e.idTeam2).name:null;
+                                        }))
+   */ 
+                                      
+       let fecha = game.reduce((acc,item)=>{
+        //la funcion item.Date.getTime() transforma la fecha 
+        //en un numero entero para poder filtrar y comparar fechas repetidas
+       acc.includes(item.Date.getTime())?null:acc.push(item.Date.getTime());
+       return acc
+      },[])
+     
+      //De esta forma reasigno los numeros enteros a una nueva fecha
+      //asi me queda un array con fechas no repetidas
+      fecha= fecha.map(e=> new Date(e))
+  //    console.log(fecha)  
   //console.log('feed son objetos dentro de array con length= ' +  feed.length);
   return {
-
-    props: JSON.parse(JSON.stringify({ feed })),
+    props: JSON.parse(JSON.stringify({ user,league,team,division,game,fecha})),
   };
 };
 
 type Props = {
-  feed: PostProps[];
+  user: PostProps[];
+  league:PostProps[];
+  team:PostProps[];
+  game:PostProps[];
+  division:PostProps[];
+  fecha:PostProps[];
 };
 
 const Blog: React.FC<Props> = (props) => {
@@ -26,15 +58,27 @@ const Blog: React.FC<Props> = (props) => {
       <div className="page">
         <main>
 
-          {props.feed.map((post) => (
+          {props.user.map((post) => (
             <div key={post.id} className="post">
               <span>{post.idPlayer + "  " + post.firstname + " " + " " + post.lastname + " " + post.createdAt}</span>
             </div>
           ))}
           <p></p><div className="center">
           <h1 > <p >Liga Dario Salazar </p></h1></div>
+         
+          { props.fecha.map(f=><div>{f}</div>)}
+          {
+            props.game.map((post) => (
+            <div key={post.idGame} className="post">
+              <span>
+              {props.team.find(t=>t.idTeam===post.idTeam1)?props.team.find(t=>t.idTeam===post.idTeam1).name:null} {+ "  " + post.CTeam1 + " " + " " }
+              {props.team.find(t=>t.idTeam===post.idTeam2)?props.team.find(t=>t.idTeam===post.idTeam2).name:null}{ + " " + post.CTeam2+ " "+post.GroupG+" "+new Date(post.Date).getDate()+'/'}{new Date(post.Date).getMonth()+1}</span>
+            </div>
+          ))}
           <h2> <p>Resultados Domingo 30/04/23 </p></h2>
           <p></p>
+         
+         
           <table className="table table-hover">
             <tbody>
               {/* <!-- Aplicadas en las filas --> */}

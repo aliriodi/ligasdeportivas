@@ -4,6 +4,13 @@ import ReactMarkdown from "react-markdown";
 
 export type PostProps = {
   id: string;
+  idGame:number;
+  idTeam1:number;
+  idTeam2:number;
+  CTeam1:number;
+  CTeam2:number;
+  Date:Date;
+  GroupG:string;
   idResult:number;
   idLeague:number;
   idPlayer:number;

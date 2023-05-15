@@ -84,8 +84,8 @@ const Blog: React.FC<Props> = (props) => {
                 <th >Grupo</th>
               </tr>
               {
-            props.game.map((post) => (
-            < >{f===new Date(post.Date).getTime()?
+            props.game.map((post) => 
+            {f===new Date(post.Date).getTime()?
               
               <tr key={post.idGame}>
               <td>{props.team.find(t=>t.idTeam===post.idTeam1)?
@@ -96,9 +96,7 @@ const Blog: React.FC<Props> = (props) => {
               <td>{ post.CTeam2}</td>
               <td> {post.GroupG}</td>
               </tr>:null}
-              </>
-          ))
-          }
+            )}
           </tbody>
           </table>
           </div> )}

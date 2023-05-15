@@ -225,11 +225,11 @@ for(let i =2; i<data2.length;i++){
                      //abro codigo escribir BDGAME
                      {console.log(i+'  response 1: '+response1 + ' response 2: '+response2)
                       console.log('Cargando')
-                      GameCreate(response1,parseInt(data2[i].split(',')[3]),
-                                 response2,parseInt(data2[i].split(',')[5]),
-                                 parse('05/07/2023','MM/dd/yyyy' , new Date()) ,
-                                 data2[i].split(',')[7],
-                                 data2[i].split(',')[9])
+                      // GameCreate(response1,parseInt(data2[i].split(',')[3]),
+                      //            response2,parseInt(data2[i].split(',')[5]),
+                      //            parse('05/07/2023','MM/dd/yyyy' , new Date()) ,
+                      //            data2[i].split(',')[7],
+                      //            data2[i].split(',')[9])
                   
                  } 
                   //cierro codigo escribir BDGAME

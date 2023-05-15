@@ -6,6 +6,7 @@ import Layout from "../components/Layout"
 import Post, { PostProps } from "../components/Post"
 import { PrismaClient } from '@prisma/client'
 import logohome from '../images/baseball-icon-388.png'
+import favicon from '../images/icons/favicon.ico'
 
 export const getStaticProps: GetStaticProps = async () => {
     const prisma = new PrismaClient();
@@ -27,7 +28,7 @@ type Props = {
 const Blog: React.FC<Props> = (props) => {
     return (
         <> <Head>
-            <link rel="shortcut icon" href="../images/icons/favicon.ico" />
+            <link rel="shortcut icon" href='../images/icons/favicon.ico' />
             </Head>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossOrigin="anonymous" ></link>
             <div className="topnav">

@@ -3,7 +3,7 @@ import { GetStaticProps } from "next"
 import Nav from "../components/Nav"
 import Post, { PostProps } from "../components/Post"
 import { PrismaClient } from '@prisma/client'
-import { access } from "fs"
+
 
 export const getStaticProps: GetStaticProps = async () => {
   const prisma = new PrismaClient()
@@ -54,7 +54,7 @@ type Props = {
 };
 
 const Blog: React.FC<Props> = (props) => {
-  return (
+   return (
     <div >
       <Nav {...props} />
       <div  className="page">
@@ -70,9 +70,10 @@ const Blog: React.FC<Props> = (props) => {
          
          
           { props.fecha.map(f=>
-          <div key={f}>
-          <h2><p>Resultados {new Date(f).getDate()+' /'} {new Date(f).getMonth()+1}{' / '+new Date(f).getFullYear()}</p></h2>
-          <table className="table table-hover">
+          <div className='center' key={f}>
+          <h2><button className="btn btn-dark " onClick={()=>document.getElementById(f.toString()).className==="table table-hover visually-hidden"?document.getElementById(f.toString()).className='table table-hover':
+                                                                                                                         document.getElementById(f.toString()).className="table table-hover visually-hidden"}>Resultados {new Date(f).getDate()+' /'} {new Date(f).getMonth()+1}{' / '+new Date(f).getFullYear()}</button></h2>
+          <table id={f.toString()} className={"table table-hover visually-hidden" }>
              <tbody >
                    {/* <!-- Aplicadas en las filas --> */}
                    <tr key={0}>

@@ -12,8 +12,9 @@ export const getStaticProps: GetStaticProps = async () => {
   const league = await prisma.league.findMany();
   const division = await prisma.division.findMany();
   const game = await prisma.game.findMany({
-    orderBy: { Date:'desc', }
-  }
+    orderBy: { Date:'desc' },
+              
+  }        
   )
   /* Como esta promesa me dio problemas al retornar lo hice directamente 
   en el returnn del front
@@ -34,7 +35,8 @@ export const getStaticProps: GetStaticProps = async () => {
      
       //De esta forma reasigno los numeros enteros a una nueva fecha
       //asi me queda un array con fechas no repetidas
-      fecha= fecha.map(e=> new Date(e))
+     // fecha= fecha.map(e=> new Date(e))
+
   //    console.log(fecha)  
   //console.log('feed son objetos dentro de array con length= ' +  feed.length);
   return {
@@ -48,7 +50,7 @@ type Props = {
   team:PostProps[];
   game:PostProps[];
   division:PostProps[];
-  fecha:PostProps[];
+  fecha:number[];
 };
 
 const Blog: React.FC<Props> = (props) => {
@@ -66,215 +68,41 @@ const Blog: React.FC<Props> = (props) => {
           <p></p><div className="center">
           <h1 > <p >Liga Dario Salazar </p></h1></div>
          
-          { props.fecha.map(f=><div>{f}</div>)}
-          {
+          { props.fecha.map(f=>
+          <>
+          <h2><p>Resultados {new Date(f).getDate()+' /'} {new Date(f).getMonth()+1}{' / '+new Date(f).getFullYear()}</p></h2>
+          <table className="table table-hover">
+             <tbody>
+                   {/* <!-- Aplicadas en las filas --> */}
+                   <tr >
+                <th >Categoria</th>
+                <th >Home</th>
+                <th >Carreras Home</th>
+                <th >Visitantes</th>
+                <th >Carreras Visitantes</th>
+                <th >Grupo</th>
+              </tr>
+              {
             props.game.map((post) => (
-            <div key={post.idGame} className="post">
-              <span>
-              {props.team.find(t=>t.idTeam===post.idTeam1)?props.team.find(t=>t.idTeam===post.idTeam1).name:null} {+ "  " + post.CTeam1 + " " + " " }
-              {props.team.find(t=>t.idTeam===post.idTeam2)?props.team.find(t=>t.idTeam===post.idTeam2).name:null}{ + " " + post.CTeam2+ " "+post.GroupG+" "+new Date(post.Date).getDate()+'/'}{new Date(post.Date).getMonth()+1}</span>
-            </div>
-          ))}
-          <h2> <p>Resultados Domingo 30/04/23 </p></h2>
-          <p></p>
-         
-         
-          <table className="table table-hover">
-            <tbody>
-              {/* <!-- Aplicadas en las filas --> */}
-              <tr >
-                <th >Categoria</th>
-                <th >Equipo1</th>
-                <th >Carreras</th>
-                <th >Equipo2</th>
-                <th >Carreras</th>
-                <th >Ganador</th>
-              </tr>
-              <tr >
-                <td >Preinfantil</td>
-                <td >Tigritos A</td>
-                <td >3</td>
-                <td >Mellizos A</td>
-                <td >13</td>
-                <td>Mellizos A</td>
-              </tr>
-              <tr >
-                <td >Preinfantil</td>
-                <td >Tigritos B</td>
-                <td >14</td>
-                <td >Cocodrilos B</td>
-                <td >2</td>
-                <td>Tigritos B</td>
-              </tr>
-              <tr >
-                <td >Compota</td>
-                <td >Tigritos A</td>
-                <td >19</td>
-                <td >Bravos B</td>
-                <td >3</td>
-                <td>Tigritos A</td>
-              </tr>
+            <>{f===new Date(post.Date).getTime()?
               
-              <tr >
-                <td >Compota</td>
-                <td >Tigritos B</td>
-                <td >24</td>
-                <td >Capitanes</td>
-                <td >4</td>
-                <td>Tigritos B</td>
-              </tr>
-              <tr >
-                <td >Preinfantil</td>
-                <td >Tigritos C</td>
-                <td >17</td>
-                <td >Capitanes </td>
-                <td >7</td>
-                <td>Tigritos C</td>
-              </tr>
-              <tr >
-                <td >Preparatorio</td>
-                <td >Tigritos A</td>
-                <td >7</td>
-                <td >Mellizos A</td>
-                <td >0</td>
-                <td>Tigritos A</td>
-              </tr>
-
-              {/* <!-- Aplicadas en las celdas (<td> o <th>) --> */}
-
-            </tbody>
+              <tr>
+              <td>{props.team.find(t=>t.idTeam===post.idTeam1)?
+                  props.division.find(d=>d.idDivision===props.team.find(t=>t.idTeam===post.idTeam1).idDivision).name:null}  </td>
+              <td>{props.team.find(t=>t.idTeam===post.idTeam1)?props.team.find(t=>t.idTeam===post.idTeam1).name:null}</td>
+              <td>{ post.CTeam1 }</td>
+              <td>{props.team.find(t=>t.idTeam===post.idTeam2)?props.team.find(t=>t.idTeam===post.idTeam2).name:null}</td>
+              <td>{ post.CTeam2}</td>
+              <td> {post.GroupG}</td>
+              </tr>:null}
+              </>
+          ))
+          }
+          </tbody>
           </table>
-        <p></p>
-          <h2> <p>Resultados Sabado 29/04/23 </p></h2>
-          <p></p>
-          <table className="table table-hover">
-            <tbody>
-              {/* <!-- Aplicadas en las filas --> */}
-              <tr >
-                <th >Categoria</th>
-                <th >Equipo1</th>
-                <th >Carreras</th>
-                <th >Equipo2</th>
-                <th >Carreras</th>
-                <th >Ganador</th>
-              </tr>
-              <tr >
-                <td >Compota</td>
-                <td >Tigritos B</td>
-                <td >18</td>
-                <td >Bravos</td>
-                <td >8</td>
-                <td>Tigritos B</td>
-              </tr>
-              <tr >
-                <td >Preinfantil</td>
-                <td >Tigritos B</td>
-                <td >4</td>
-                <td >Mellizos B</td>
-                <td >17</td>
-                <td>Mellizos B</td>
-              </tr>
-              <tr >
-                <td >Preparatorio</td>
-                <td >Tigritos A</td>
-                <td >11</td>
-                <td >Juvencio</td>
-                <td >4</td>
-                <td>Tigritos A</td>
-              </tr>
-
-              {/* <!-- Aplicadas en las celdas (<td> o <th>) --> */}
-
-            </tbody>
-          </table>
-        <p></p>
-          <h2> <p>Resultados Viernes 28/04/23 </p></h2>
-          <p></p>
-          <table className="table table-hover">
-            <tbody>
-              {/* <!-- Aplicadas en las filas --> */}
-              <tr >
-                <th >Categoria</th>
-                <th >Equipo1</th>
-                <th >Carreras</th>
-                <th >Equipo2</th>
-                <th >Carreras</th>
-                <th >Ganador</th>
-              </tr>
-              <tr >
-                <td >Preinfantil</td>
-                <td >Tigritos C</td>
-                <td >13</td>
-                <td >Gigantes</td>
-                <td >3</td>
-                <td>Tigritos C</td>
-              </tr>
-              <tr >
-                <td >Infantil</td>
-                <td >Tigritos A</td>
-                <td >12</td>
-                <td >Mellizos</td>
-                <td >0</td>
-                <td>Tigritos A</td>
-              </tr>
-              <tr >
-                <td >Compota</td>
-                <td >Tigritos A</td>
-                <td >14</td>
-                <td >Mellizos</td>
-                <td >13</td>
-                <td>Tigritos A</td>
-              </tr>
-
-              {/* <!-- Aplicadas en las celdas (<td> o <th>) --> */}
-
-            </tbody>
-          </table>
-
-          <p></p>
-         <h2> <p>Resultados Jueves 27/04/23 </p></h2>
-          <p></p>
-          <table className="table table-hover">
-            <tbody>
-              {/* <!-- Aplicadas en las filas --> */}
-              <tr >
-                <th >Categoria</th>
-                <th >Equipo1</th>
-                <th >Carreras</th>
-                <th >Equipo2</th>
-                <th >Carreras</th>
-                <th >Ganador</th>
-              </tr>
-              <tr >
-                <td >Preparatoria</td>
-                <td >Tigritos A</td>
-                <td >8</td>
-                <td >Escorpiones</td>
-                <td >2</td>
-                <td>Tigritos A</td>
-              </tr>
-              <tr >
-                <td >Infantil</td>
-                <td >Tigritos A</td>
-                <td >14</td>
-                <td >Piratas</td>
-                <td >4</td>
-                <td>Tigritos A</td>
-              </tr>
-              <tr >
-                <td >Preinfantil</td>
-                <td >Tigritos B</td>
-                <td >30</td>
-                <td >Tigritos A</td>
-                <td >10</td>
-                <td>Tigritos B</td>
-              </tr>
-
-              {/* <!-- Aplicadas en las celdas (<td> o <th>) --> */}
-
-            </tbody>
-          </table>
-
+          </> )}
+          
+         
         </main>
       </div>
 

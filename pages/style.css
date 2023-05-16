@@ -1,6 +1,10 @@
 .logo{
+  height: 45px;
+  width: 45px;
+  background: red;
+  display:flex;
   transition: transform .6s ease-in-out;
-}
+  }
 .logo:hover{
   transform: rotate(360deg);
 }
@@ -16,7 +20,8 @@
     background-color: #333;
     overflow: hidden;
     position: fixed;
-    text-align: right;
+    height:55px;
+    text-align: center;
     top: 0;
     width: 100%;
     /* z-index: 1000; */
@@ -24,11 +29,11 @@
   
   /* Style the links inside the navigation bar */
   .topnav a {
-    float: left;
     color: #f2f2f2;
     text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+    padding: 14px;
+    
+    text-decoration:none;
     font-size: 17px;
   }
   
@@ -113,6 +118,8 @@ ul desplegable
 }
  @media (max-width: 500px )or (max-height: 300px) {
   .page {
+    margin: auto;
+    text-align: center;
      padding-top: 150px;
   } 
 } 

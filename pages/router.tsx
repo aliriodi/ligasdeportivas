@@ -118,7 +118,7 @@ const Blog: React.FC<Props> = (props) => {
           <select className="custom-select" id="input1" onChange={()=>setIDTEAM(parseInt((document.getElementById("input1")as HTMLInputElement).value)) } >
             <option key='0' value="0">Seleccione Equipo</option>
             {props.team.map(
-              team0 => team0.idDivision===IDDIVISION?<option key={team0.idTeam} value={team0.idTeam}>{team0.name}</option>:null
+              team0 => team0.idDivision===IDDIVISION && props.player.some(p=>p.idTeam===team0.idTeam)?<option key={team0.idTeam} value={team0.idTeam}>{team0.name}</option>:null
              )}
           </select>
           </form>

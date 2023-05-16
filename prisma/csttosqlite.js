@@ -241,6 +241,7 @@ for(let i =2; i<data2.length;i++){
  
 }
 
+  
 //cargarResultTeams();
 
 //Esta funcion tiene dos grandes promesas

@@ -1,8 +1,6 @@
 .logo{
   height: 45px;
   width: 45px;
-  background: red;
-  display:flex;
   transition: transform .6s ease-in-out;
   }
 .logo:hover{

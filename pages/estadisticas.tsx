@@ -31,10 +31,11 @@ const Blog: React.FC<Props> = (props) => {
               <span>{post.idPlayer + "  " + post.firstname + " " + " " + post.lastname + " " + post.createdAt}</span>
             </div>
           ))}
-          <p></p><div className="center">
+          <p></p><div className="center ">
           <h1 > <p >Liga Dario Salazar </p></h1></div>
           <h2> <p>Resultados Domingo 30/04/23 </p></h2>
           <p></p>
+          <div className="center estadisticas">
           <table className="table table-hover">
             <tbody>
               {/* <!-- Aplicadas en las filas --> */}
@@ -100,6 +101,7 @@ const Blog: React.FC<Props> = (props) => {
 
             </tbody>
           </table>
+          </div>
         <p></p>
           <h2> <p>Resultados Sabado 29/04/23 </p></h2>
           <p></p>

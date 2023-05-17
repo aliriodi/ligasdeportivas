@@ -116,6 +116,16 @@ ul desplegable
 .page{
  padding-top: 80px;
 }
+.posiciones{
+  width: 50%;	
+}
+.resultados {
+  width: 60%;	
+}
+.estadisticas{
+  width: 50%;	
+}
+
  @media (max-width: 500px )or (max-height: 300px) {
   .page {
     margin: auto;

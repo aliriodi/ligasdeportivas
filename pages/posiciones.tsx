@@ -140,10 +140,11 @@ const Posiciones: React.FC<Props> = (props) => {
             <h1 > <p >Liga Dario Salazar </p></h1></div>
 
           {props.division.map(D =>
-            <div className='center' key={D.idDivision}>
+            <div className='center posiciones' key={D.idDivision}>
 {props.teamCP.some(team=> team.category===D.name)?<>
               <h2>{D.name}</h2>
-              <table id={D.name} className={"table table-hover"}>
+              
+              <table id={D.name} className={"table table-hover "}>
                 <tbody >
                   {/* <!-- Aplicadas en las filas --> */}
                   <tr key={0}>

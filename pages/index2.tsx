@@ -66,7 +66,6 @@ function App() {
       <p>E: Errores</p>
       <p>DP: Double plays </p>
       <p>Fld. Pct / PF: Porcentaje de fildeo </p>
-
       <p>AVE = HC/VA </p>
 
 

@@ -75,31 +75,37 @@ export const getStaticProps: GetStaticProps = async () => {
  
     //CA CARRERAS ANOTADAS
     //CR CARRERAS DEL OTRO EQUIPO CON EL CUAL JUGO
-    teamCP.forEach(team1=> { let aux ={JJ:0,JG:0,JP:0,CA:0,CR:0};
-                             
-                            gameGC.map(game1=> //En caso de que el primer equipo sea el que seleccionamos
-                                               // sumamos el juego jugado, vemos quein gano y las carreras anotadas y remolcadas o en contra
-                                              {if(team1.idTeam===game1.idTeam1){team1['JJ']=aux.JJ+1;
-                                                                                if(game1.CTeam1>game1.CTeam2){team1['JG']=aux.JG+1;
-                                                                                                              team1['JP']=aux.JP;}
-                                                                                if(game1.CTeam1<game1.CTeam2){team1['JG']=aux.JG;
-                                                                                                              team1['JP']=aux.JP+1;}
-                                                                                team1['CA']=aux.CA+game1.CTeam1;
-                                                                                team1['CR']=aux.CR+game1.CTeam2;}
-                                                // En caso contrario sumamos al otro
-                                                if(team1.idTeam===game1.idTeam2){team1['JJ']=aux.JJ+1;
-                                                                                if(game1.CTeam1>game1.CTeam2){team1['JG']=aux.JG;
-                                                                                                              team1['JP']=aux.JP+1;}
-                                                                                if(game1.CTeam1<game1.CTeam2){team1['JG']=aux.JG+1;
-                                                                                                              team1['JP']=aux.JP;}
-                                                                                team1['CA']=aux.CA+game1.CTeam2;
-                                                                                team1['CR']=aux.CR+game1.CTeam1;}
-
-                                                                                                                                                                                           }
-                                                                                
-
-                                              )
-    })
+    teamCP.forEach(team1 => {
+      let aux = { JJ: 0, JG: 0, JP: 0, CA: 0, CR: 0 };
+      gameGC.forEach(game1 => {
+        if (team1.idTeam === game1.idTeam1) {
+          aux.JJ += 1;
+          if (game1.CTeam1 > game1.CTeam2) {
+            aux.JG += 1;
+          } else if (game1.CTeam1 < game1.CTeam2) {
+            aux.JP += 1;
+          }
+          aux.CA += game1.CTeam1;
+          aux.CR += game1.CTeam2;
+        } else if (team1.idTeam === game1.idTeam2) {
+          aux.JJ += 1;
+          if (game1.CTeam2 > game1.CTeam1) {
+            aux.JG += 1;
+          } else if (game1.CTeam2 < game1.CTeam1) {
+            aux.JP += 1;
+          }
+          aux.CA += game1.CTeam2;
+          aux.CR += game1.CTeam1;
+        }
+      });
+    
+      team1.JJ = aux.JJ;
+      team1.JG = aux.JG;
+      team1.JP = aux.JP;
+      team1.CA = aux.CA;
+      team1.CR = aux.CR;
+      team1.DIF= team1.JJ - team1.JG;
+    });
    //console.log(teamCP)
   // console.log(teamCP.length)
 
@@ -142,6 +148,7 @@ const Blog: React.FC<Props> = (props) => {
                     <th >JJ </th>
                     <th >JG</th>
                     <th >JP</th>
+                    <th> DIF</th>
                     <th >CA</th>
                     <th >CR</th>
                   </tr>
@@ -156,6 +163,7 @@ const Blog: React.FC<Props> = (props) => {
                           <td>{team1.JJ} </td>
                           <td>{team1.JG}</td>
                           <td>{team1.JP}</td>
+                          <td>{team1.JJ === team1.JG?'-':team1.DIF}</td>
                           <td>{team1.CA}</td>
                           <td> {team1.CR}</td>
                         </tr> :null

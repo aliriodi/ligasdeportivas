@@ -31,6 +31,7 @@ export type PostProps = {
   JP:Number;
   CA:Number;
   CR:number;
+  DIF:number;
   author: {
     name: string;
     email: string;

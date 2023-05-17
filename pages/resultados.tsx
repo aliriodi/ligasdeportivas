@@ -25,7 +25,7 @@ export const getStaticProps: GetStaticProps = async () => {
                                        team.find(el=>el.idTeam===e.idTeam2)?e['team2name']=team.find(el=>el.idTeam===e.idTeam2).name:null;
                                         }))
    */ 
-                                      
+       //Para tener fechas no repetidas de juegos                               
        let fecha = game.reduce((acc,item)=>{
         //la funcion item.Date.getTime() transforma la fecha 
         //en un numero entero para poder filtrar y comparar fechas repetidas

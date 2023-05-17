@@ -24,6 +24,13 @@ export type PostProps = {
   name:string;
   email:string;
   createdAt:string;
+  NTeam:string;
+  category:string;
+  JJ:Number;
+  JG:number;
+  JP:Number;
+  CA:Number;
+  CR:number;
   author: {
     name: string;
     email: string;

@@ -136,7 +136,7 @@ const Blog: React.FC<Props> = (props) => {
               <table id={'1'} className={"table table-hover"}>
                 <tbody >
                   {/* <!-- Aplicadas en las filas --> */}
-                  <tr key={0}>{console.log(props.gameGC[0])}{console.log(props.teamCP[0])}
+                  <tr key={0}>
                     {/* <th >Categoria</th> */}
                     <th> Home</th>
                     <th >JJ </th>

@@ -62,7 +62,7 @@ export const getStaticProps: GetStaticProps = async () => {
   //   if (!teamCP.includes({ NTeam: game1.NTeam1, category: game1.category })) { teamCP.push({ NTeam: game1.NTeam1, category: game1.category }); }
   //   else if (teamCP.includes({ NTeam: game1.NTeam2, category: game1.category })) { teamCP.push({ NTeam: game1.NTeam2, category: game1.category }); }
   // })
-  const teamCP = [];
+  let teamCP = [];
   //recorremos gameGC y creamos teamCP para luego trabajarlo como deseamos renderizar
   gameGC.forEach(game1 => {
     if (!teamCP.some(item => item.NTeam === game1.NTeam1 && item.category === game1.category)) {
@@ -106,6 +106,9 @@ export const getStaticProps: GetStaticProps = async () => {
       team1.CR = aux.CR;
       team1.DIF= team1.JJ - team1.JG;
     });
+    // Ahora ordeno el array por DIF
+    teamCP.sort((a, b) => a.DIF - b.DIF);
+
    //console.log(teamCP)
   // console.log(teamCP.length)
 

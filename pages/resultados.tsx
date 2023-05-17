@@ -70,7 +70,7 @@ const Blog: React.FC<Props> = (props) => {
          
          
           { props.fecha.map(f=><div>
-          <div className='center resultados' key={f}>
+          <div className='center' key={f}>
           <h2><button className="btn btn-dark " onClick={()=>document.getElementById(f.toString()).className==="table table-hover visually-hidden"?document.getElementById(f.toString()).className='table table-hover':
                                                                                                                          document.getElementById(f.toString()).className="table table-hover visually-hidden"}>Resultados {new Date(f).getDate()+1}{' /'} {new Date(f).getMonth()+1}{' / '+new Date(f).getFullYear()}</button></h2>
           </div>

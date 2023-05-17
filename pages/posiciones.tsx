@@ -129,7 +129,7 @@ type Props = {
   teamCP:PostProps[];
 };
 
-const Blog: React.FC<Props> = (props) => {
+const Posiciones: React.FC<Props> = (props) => {
   return (
     <div >
       <Nav {...props} />
@@ -141,8 +141,9 @@ const Blog: React.FC<Props> = (props) => {
 
           {props.division.map(D =>
             <div className='center' key={D.idDivision}>
+{props.teamCP.some(team=> team.category===D.name)?<>
               <h2>{D.name}</h2>
-              <table id={'1'} className={"table table-hover"}>
+              <table id={D.name} className={"table table-hover"}>
                 <tbody >
                   {/* <!-- Aplicadas en las filas --> */}
                   <tr key={0}>
@@ -169,13 +170,13 @@ const Blog: React.FC<Props> = (props) => {
                           <td>{team1.JJ === team1.JG?'-':team1.DIF}</td>
                           <td>{team1.CA}</td>
                           <td> {team1.CR}</td>
-                        </tr> :null
+                        </tr> :null 
 
                     )
                   }
                 </tbody>
               </table>
-            </div>)}
+              </> :null}      </div>)}
 
 
         </main>
@@ -184,4 +185,4 @@ const Blog: React.FC<Props> = (props) => {
     </div>
   );
 };
-export default Blog
+export default Posiciones

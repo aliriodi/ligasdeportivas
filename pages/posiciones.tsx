@@ -49,12 +49,12 @@ export const getStaticProps: GetStaticProps = async () => {
       //se anexan nombres tambien
       {
         team.find(t => t.idTeam === game1.idTeam1) ? game1['NTeam1'] = team.find(t => t.idTeam === game1.idTeam1).name : null;
-        team.find(t => t.idTeam === game1.idTeam1) ? game1['NTeam2'] = team.find(t => t.idTeam === game1.idTeam2).name : null;
+        team.find(t => t.idTeam === game1.idTeam2) ? game1['NTeam2'] = team.find(t => t.idTeam === game1.idTeam2).name : null;
         game1['category'] = division1.name;
         gameGC.push(game1)
       }
     }))
-  //  console.log(gameGC)
+    //console.log(gameGC)
   //Equipos que han jugado por temporada
   //Este codigo no funciono 
   // const teamCP = [];
@@ -66,19 +66,38 @@ export const getStaticProps: GetStaticProps = async () => {
   //recorremos gameGC y creamos teamCP para luego trabajarlo como deseamos renderizar
   gameGC.forEach(game1 => {
     if (!teamCP.some(item => item.NTeam === game1.NTeam1 && item.category === game1.category)) {
-      teamCP.push({ idTeam:game1.idTeam1, NTeam: game1.NTeam1, category: game1.category });
+      teamCP.push({ idTeam:game1.idTeam1, NTeam: game1.NTeam1, category: game1.category ,GroupG:game1.GroupG});
     }
-    if (game1.NTeam2 && !teamCP.some(item => item.NTeam === game1.NTeam2 && item.category === game1.category)) {
-      teamCP.push({ idTeam:game1.idTeam2,NTeam: game1.NTeam2, category: game1.category });
+    if (!teamCP.some(item => item.NTeam === game1.NTeam2 && item.category === game1.category)) {
+      teamCP.push({ idTeam:game1.idTeam2,NTeam: game1.NTeam2, category: game1.category ,GroupG:game1.GroupG});
     }
     });
- 
+    
+    //Creando grupos para CLASIFICACION DE JUEGOS juegos
+   // console.log(teamCP)
+    const GroupG1 = [];
+    console.log( teamCP)
+    teamCP.forEach(team1=> {
+     // team1.GroupG === undefined? team1.GroupG='':null;
+      if(!GroupG1.some(e=> e.GroupG===team1.GroupG && e.category===team1.category))
+                          {GroupG1.push({category: team1.category,
+                            GroupG: team1.GroupG      })}
+                    })
     //CA CARRERAS ANOTADAS
     //CR CARRERAS DEL OTRO EQUIPO CON EL CUAL JUGO
+    //Creo esta funcion de ordenamiento para pasar las clasificaciones
+    //de los grupos y saque los parametros por grupo A REDNERIZAR
+    //cada grupo: A Compota, B Compota semifinal Compota,
+    //           Intantil A, Infantil B, Semifinal Inffantil, Final Infantil
+    //           debe pasar por un ordenamiento 
+    function posicion(gameGC){
     teamCP.forEach(team1 => {
-      let aux = { JJ: 0, JG: 0, JP: 0, CA: 0, CR: 0 };
+      let aux = { JJ: 0, JG: 0, JP: 0, CA: 0, CR: 0, 
+                  category: team1.category,
+                  GroupG: team1.GroupG  };
+     // console.log(gameGC[0])
       gameGC.forEach(game1 => {
-        if (team1.idTeam === game1.idTeam1) {
+         if (team1.idTeam === game1.idTeam1) {
           aux.JJ += 1;
           if (game1.CTeam1 > game1.CTeam2) {
             aux.JG += 1;
@@ -105,11 +124,21 @@ export const getStaticProps: GetStaticProps = async () => {
       team1.CA = aux.CA;
       team1.CR = aux.CR;
       team1.DIF= team1.JJ - team1.JG;
+      team1.category = aux.category;
+      team1.GroupG = aux.GroupG;
     });
-    // Ahora ordeno el array por DIF
     teamCP.sort((a, b) => a.DIF - b.DIF);
-
-   //console.log(teamCP)
+  return teamCP}
+    // Ahora ordeno el array por DIF
+ //   console.log(teamCP)
+//console.log(teamCP.length)
+//console.log(gameGC.map(e=> e.category +'  '+e.GroupG))
+//console.log(gameGC.length)
+   teamCP = posicion(gameGC);
+    console.log(GroupG1)
+    console.log(GroupG1.length)
+//    console.log(teamCP)
+  //  console.log(teamCP.length)
   // console.log(teamCP.length)
 
   //console.log('feed son objetos dentro de array con length= ' +  feed.length);

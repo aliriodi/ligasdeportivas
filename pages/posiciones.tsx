@@ -188,10 +188,10 @@ const Posiciones: React.FC<Props> = (props) => {
             <div className='center posiciones' key={D.idDivision}>
           {   
            props.teamCP.some(team=> team.category===D.name)?
-             
-             <>  {props.GroupG1.map(G=>
-                      D.name===G.GroupG)}
-              <h2>{D.name}</h2>
+           props.GroupG1.map(G=>
+            G.category===D.name && props.teamCP.some(team=> team.GroupG===G.GroupG)?
+             <>  
+              <h2>{G.category +' '+ G.GroupG}</h2>
               
               <table id={D.name} className={"table table-hover "}>
                 <tbody >
@@ -212,7 +212,7 @@ const Posiciones: React.FC<Props> = (props) => {
                     props.teamCP.map(team1 =>
                       //BUSCO SOLO LA SELECCION DE LOS EQUIPOS TIPO
                       // COMPOTA O PREPARATORIO O .... INFANTIL
-                      team1.category===D.name?
+                      team1.category===D.name && team1.GroupG===G.GroupG ?
                         <tr key={team1.idTeam}>
                           {/* <td>{team1.category} </td> */}
                           <td>{team1.NTeam}</td>
@@ -230,7 +230,7 @@ const Posiciones: React.FC<Props> = (props) => {
                   }
                 </tbody>
               </table>
-              </> :null }      </div>)}
+              </> :null):null }      </div>)}
 
 
         </main>

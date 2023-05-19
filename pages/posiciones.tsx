@@ -92,59 +92,51 @@ export const getStaticProps: GetStaticProps = async () => {
   
     ///GroupG1 array con objetos [{category:'COMPOTA', Group: 'B'},{}]
     //G = GroupG1[i]
-  function orderForGroup(G){
-    teamCP.forEach(team1 => {
+
+    //Game = {NTeam1, CTeam1, Nteam2, Cteam2, GroupG, category}
+    //Team = {NTeam,                          GroupG, category}
+    
+    teamCP.map(team1 => {
       let aux = { JJ: 0, JG: 0, JP: 0, CA: 0, CR: 0, category:null,GroupG:null};
        // console.log(gameGC[0])
-      gameGC.forEach(game1 => {
-       if(game1.category===G.category && game1.GroupG ===G.GroupG) {
-        aux['category']= team1.category;
-        aux['GroupG']= team1.GroupG  ;
-        if(game1.category===G.category && game1.GroupG === G.GroupG){
+      gameGC.map(game1 => {
+       if((game1.category===team1.category && game1.GroupG ===team1.GroupG )&& 
+           (team1.idTeam === game1.idTeam1||team1.idTeam === game1.idTeam2)) {
+          
          if (team1.idTeam === game1.idTeam1) {
           aux.JJ += 1;
           if (game1.CTeam1 > game1.CTeam2) {
             aux.JG += 1;
-          } else if (game1.CTeam1 < game1.CTeam2) {
+         } else if (game1.CTeam1 < game1.CTeam2) {
             aux.JP += 1;
-          }
-          team1.JJ = aux.JJ;
-          team1.JG = aux.JG;
-          team1.JP = aux.JP;
-          team1.CA = aux.CA;
-          team1.CR = aux.CR;
-          team1.DIF= team1.JJ - team1.JG;
-          team1.category = aux.category;
-          team1.GroupG = aux.GroupG;
+        }
           aux.CA += game1.CTeam1;
           aux.CR += game1.CTeam2;
         } else if (team1.idTeam === game1.idTeam2) {
           aux.JJ += 1;
-          if (game1.CTeam2 > game1.CTeam1) {
+         if (game1.CTeam2 > game1.CTeam1) {
             aux.JG += 1;
           } else if (game1.CTeam2 < game1.CTeam1) {
             aux.JP += 1;
           }
           aux.CA += game1.CTeam2;
           aux.CR += game1.CTeam1;
-          team1.JJ = aux.JJ;
-          team1.JG = aux.JG;
-          team1.JP = aux.JP;
-          team1.CA = aux.CA;
-          team1.CR = aux.CR;
-          team1.DIF= team1.JJ - team1.JG;
-          team1.category = aux.category;
-          team1.GroupG = aux.GroupG;
-        }}
-       }});
-      });}
+         }
+       } 
+       team1.JJ = aux.JJ;
+       team1.JP = aux.JP;
+       team1.JG = aux.JG;
+       team1.DIF= team1.JJ - team1.JG;
+       team1.CA = aux.CA;
+       team1.CR = aux.CR;
+      }
+       );
+      });
     
-      
-    GroupG1.forEach(G=> orderForGroup(G))
    //console.log(GroupG1[0])
-   console.log(GroupG1)
+  // console.log(GroupG1)
     //teamCP = teamCP2;
-    teamCP.sort((a, b) => a.DIF - b.DIF);
+    teamCP.sort((b,a)=>(a.CA-a.CR)-(b.CA-b.CR)).sort((a, b) => a.DIF - b.DIF);
   
     // Ahora ordeno el array por DIF
  //   console.log(teamCP)
@@ -156,7 +148,7 @@ export const getStaticProps: GetStaticProps = async () => {
 //console.log(teamCP)
  //  console.log(GroupG1)
  //   console.log(GroupG1.length)
-//    console.log(teamCP)
+ //   console.log(teamCP)
   //  console.log(teamCP.length)
   // console.log(teamCP.length)
 

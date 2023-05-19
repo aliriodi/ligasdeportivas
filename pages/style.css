@@ -22,9 +22,16 @@
     text-align: center;
     top: 0;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     /* z-index: 1000; */
   }
-  
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   /* Style the links inside the navigation bar */
   .topnav a {
     color: #f2f2f2;

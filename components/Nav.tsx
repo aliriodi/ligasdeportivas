@@ -35,7 +35,9 @@ const Blog: React.FC<Props> = (props) => {
                 <a href="/equipos">Equipos</a>
                 <a href="/posiciones">Posiciones</a>
                 <a href="/resultados">Resultados</a>
+                <div className="logo-container">
                 <a  href="/"><Image  className="logo"src={logohome}  height="35" width="45" alt="Home" /></a>
+                </div>
                 <a href="/estadisticas">Estadisticas</a>
                 <a href="/router">Router Dario Salazar</a>
                 {/* <a href="/contact">Contacto</a> */}

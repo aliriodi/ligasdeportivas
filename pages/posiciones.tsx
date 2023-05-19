@@ -186,17 +186,18 @@ const Posiciones: React.FC<Props> = (props) => {
 
           {props.division.map(D => 
             <div className='center posiciones' key={D.idDivision}>
+              <h2 key={D.name}>{D.name}</h2>
           {   
            props.teamCP.some(team=> team.category===D.name)?
            props.GroupG1.map(G=>
             G.category===D.name && props.teamCP.some(team=> team.GroupG===G.GroupG)?
              <>  
-              <h2>{G.category +' '+ G.GroupG}</h2>
+              <h3 key={D.name}>{G.category +' '+ G.GroupG}</h3>
               
-              <table id={D.name} className={"table table-hover "}>
-                <tbody >
+              <table id={D.name} key={D.name+'table'} className={"table table-hover "}>
+                <tbody  key={D.name+'tbody'} >
                   {/* <!-- Aplicadas en las filas --> */}
-                  <tr key={0}>
+                  <tr key={D.name+D.category}>
                     {/* <th >Categoria</th> */}
                     <th> Home</th>
                     <th >JJ </th>
@@ -205,8 +206,8 @@ const Posiciones: React.FC<Props> = (props) => {
                     <th> DIF</th>
                     <th >CA</th>
                     <th >CR</th>
-                    <th >Category</th>
-                    <th >Group</th>
+                    {/* <th >Category</th>
+                    <th >Group</th> */}
                   </tr>
                   {
                     props.teamCP.map(team1 =>
@@ -222,8 +223,8 @@ const Posiciones: React.FC<Props> = (props) => {
                           <td>{team1.JJ === team1.JG?'-':team1.DIF}</td>
                           <td>{team1.CA}</td>
                           <td> {team1.CR}</td>
-                          <td> {team1.category}</td>
-                          <td> {team1.GroupG}</td>
+                          {/* <td> {team1.category}</td>
+                          <td> {team1.GroupG}</td> */}
                         </tr> :null 
 
                     )

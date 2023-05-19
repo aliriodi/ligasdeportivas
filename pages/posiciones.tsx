@@ -82,6 +82,7 @@ export const getStaticProps: GetStaticProps = async () => {
                           {GroupG1.push({category: team1.category,
                             GroupG: team1.GroupG      })}
                     })
+       GroupG1.reverse();           
     //CA CARRERAS ANOTADAS
     //CR CARRERAS DEL OTRO EQUIPO CON EL CUAL JUGO
     //Creo esta funcion de ordenamiento para pasar las clasificaciones

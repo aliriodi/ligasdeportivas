@@ -77,7 +77,7 @@ export const getStaticProps: GetStaticProps = async () => {
    // console.log(teamCP)
     const GroupG1 = [];
     teamCP.forEach(team1=> {
-     // team1.GroupG === undefined? team1.GroupG='':null;
+    //  team1.GroupG === ''? team1.GroupG='SEMIFINAL':null;
       if(!GroupG1.some(e=> e.GroupG===team1.GroupG && e.category===team1.category))
                           {GroupG1.push({category: team1.category,
                             GroupG: team1.GroupG      })}
@@ -136,7 +136,7 @@ export const getStaticProps: GetStaticProps = async () => {
    //console.log(GroupG1[0])
   // console.log(GroupG1)
     //teamCP = teamCP2;
-    teamCP.sort((b,a)=>(a.CA-a.CR)-(b.CA-b.CR)).sort((a, b) => a.DIF - b.DIF).sort((a, b) => a.GroupG.localeCompare(b.GroupG));
+    teamCP.sort((b,a)=>(a.CA-a.CR)-(b.CA-b.CR)).sort((a, b) => a.DIF - b.DIF).sort((b, a) => a.GroupG.localeCompare(b.GroupG));
   
     // Ahora ordeno el array por DIF
  //   console.log(teamCP)

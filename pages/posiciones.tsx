@@ -136,7 +136,11 @@ export const getStaticProps: GetStaticProps = async () => {
    //console.log(GroupG1[0])
   // console.log(GroupG1)
     //teamCP = teamCP2;
-    teamCP.sort((b,a)=>(a.CA-a.CR)-(b.CA-b.CR)).sort((a, b) => a.DIF - b.DIF).sort((b, a) => a.GroupG.localeCompare(b.GroupG));
+    
+    //Ordenando por CA-CR && DIF && GroupG
+    teamCP.sort((b,a)  =>(a.CA-a.CR)-(b.CA-b.CR))
+          .sort((a, b) =>   a.DIF   -  b.DIF)
+          .sort((b, a) => a.GroupG.localeCompare(b.GroupG));
   
     // Ahora ordeno el array por DIF
  //   console.log(teamCP)

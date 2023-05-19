@@ -107,7 +107,7 @@ const Blog: React.FC<Props> = (props) => {
           {/* {props.league.map(p => <span>{'Liga ' + p.idLeague + " " + p.name}</span>)} */}
           {/* <p>{IDTEAM}{IDDIVISION}</p> */}
           <form className="custom-form">
-          <select className="custom-select" id="input2" onChange={()=>setIDDIVISION(parseInt((document.getElementById("input2")as HTMLInputElement).value)) } >
+          <select className="custom-select  btn btn-dark" id="input2" onChange={()=>setIDDIVISION(parseInt((document.getElementById("input2")as HTMLInputElement).value)) } >
             <option key={0} value="0">Seleccione Division</option>
             {props.division.map(
               division => <option key={division.idDivision} value={division.idDivision}>{division.name}</option>
@@ -115,7 +115,7 @@ const Blog: React.FC<Props> = (props) => {
               
           </select>
            <>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</>                                        {/* JS = parseInt(document.getElementById("input1").value))  */}
-          <select className="custom-select" id="input1" onChange={()=>setIDTEAM(parseInt((document.getElementById("input1")as HTMLInputElement).value)) } >
+          <select className="custom-select  btn btn-dark" id="input1" onChange={()=>setIDTEAM(parseInt((document.getElementById("input1")as HTMLInputElement).value)) } >
             <option key='0' value="0">Seleccione Equipo</option>
             {props.team.map(
               team0 => team0.idDivision===IDDIVISION && props.player.some(p=>p.idTeam===team0.idTeam)?<option key={team0.idTeam} value={team0.idTeam}>{team0.name}</option>:null

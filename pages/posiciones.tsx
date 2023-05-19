@@ -136,7 +136,7 @@ export const getStaticProps: GetStaticProps = async () => {
    //console.log(GroupG1[0])
   // console.log(GroupG1)
     //teamCP = teamCP2;
-    teamCP.sort((b,a)=>(a.CA-a.CR)-(b.CA-b.CR)).sort((a, b) => a.DIF - b.DIF);
+    teamCP.sort((b,a)=>(a.CA-a.CR)-(b.CA-b.CR)).sort((a, b) => a.DIF - b.DIF).sort((a, b) => a.GroupG.localeCompare(b.GroupG));
   
     // Ahora ordeno el array por DIF
  //   console.log(teamCP)
@@ -183,9 +183,10 @@ const Posiciones: React.FC<Props> = (props) => {
           {props.division.map(D => 
             <div className='center posiciones' key={D.idDivision}>
           {   
-    props.teamCP.some(team=> team.category===D.name)?
-    
-     <>        
+           props.teamCP.some(team=> team.category===D.name)?
+             
+             <>  {props.GroupG1.map(G=>
+                      D.name===G.GroupG)}
               <h2>{D.name}</h2>
               
               <table id={D.name} className={"table table-hover "}>

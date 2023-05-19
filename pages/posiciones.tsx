@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react";
 import { GetStaticProps } from "next"
 import Nav from "../components/Nav"
 import Post, { PostProps } from "../components/Post"
@@ -176,10 +176,18 @@ type Props = {
 };
 
 const Posiciones: React.FC<Props> = (props) => {
+  const [hiddenCategories, setHiddenCategories] = useState<string[]>([]);
+  const toggleCategory = (category: string) => {
+    setHiddenCategories((prevHiddenCategories) =>
+      prevHiddenCategories.includes(category)
+        ? prevHiddenCategories.filter((cat) => cat !== category)
+        : [...prevHiddenCategories, category]
+    );
+  };
   return (
-    <div >
+    <div key={'cero'}>
       <Nav {...props} />
-      <div className="page">
+      <div key={'uno'} className="page">
         <main >
         
           <p></p><div key={0} className="center">
@@ -187,13 +195,19 @@ const Posiciones: React.FC<Props> = (props) => {
 
           {props.division.map(D => 
             <div className='center posiciones' key={D.idDivision}>
-              <h2 key={D.name}>{D.name}</h2>
+              <h2 key={D.name}><button className="btn btn-dark " 
+               onClick={() => toggleCategory(D.name)}
+               >
+                {D.name}
+              </button></h2>
+             
           {   
            props.teamCP.some(team=> team.category===D.name)?
            props.GroupG1.map(G=>
             G.category===D.name && props.teamCP.some(team=> team.GroupG===G.GroupG)?
-             <>  
-              <h3 key={D.name}>{G.category +' '+ G.GroupG}</h3>
+            
+             <div id={D.name} className={hiddenCategories.includes(D.name) ?'' :  'visually-hidden'} key={G.GroupG+G.category}> 
+              <h3  id={D.name}  className={""} key={D.name}>{G.category +' '+ G.GroupG}</h3>
               
               <table id={D.name} key={D.name+'table'} className={"table table-hover "}>
                 <tbody  key={D.name+'tbody'} >
@@ -232,9 +246,9 @@ const Posiciones: React.FC<Props> = (props) => {
                   }
                 </tbody>
               </table>
-              </> :null):null }      </div>)}
+              </div> :null):null }     </div>)}
 
-
+       
         </main>
       </div>
 

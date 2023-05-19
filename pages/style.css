@@ -22,16 +22,9 @@
     text-align: center;
     top: 0;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     /* z-index: 1000; */
   }
-  .logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  
   /* Style the links inside the navigation bar */
   .topnav a {
     color: #f2f2f2;
@@ -133,15 +126,15 @@ ul desplegable
   width: 50%;	
 }
 
- @media screen and  (max-width: 700px )or (max-height: 700px) {
+ @media (max-width: 500px )or (max-height: 300px) {
   .page {
     margin: auto;
     text-align: center;
-     padding-top: 100px;
+     padding-top: 150px;
   }
   .topnav {
-    flex-direction: column;
-    align-items: flex-start;
+    margin-top: 0;
+    padding-top: 0;
     background-color: #333;
     overflow: hidden;
     position: fixed;
@@ -151,17 +144,11 @@ ul desplegable
     width: 100%;
     /* z-index: 1000; */
   }
-  .topnav a:not(:first-child) {
-    display: none;
-  }
-  .topnav a.icon {
-    float: right;
-    display: block;
-  }
   .topnav a {
     color: #f2f2f2;
     text-align: center;
-    margin: 10px 0;
+    padding: 18px;
+    
     text-decoration:none;
     font-size: 17px;
   }

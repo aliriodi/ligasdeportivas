@@ -26,15 +26,6 @@ type Props = {
 };
 
 const Blog: React.FC<Props> = (props) => {
-    function toggleNavMenu() {
-        var nav = document.getElementById("myTopnav");
-        if (nav.className === "topnav") {
-          nav.className += " responsive";
-        } else {
-          nav.className = "topnav";
-        }
-      }
-      
     return (
         <> <Head>
             <link rel="shortcut icon" href='../images/icons/favicon.ico' />
@@ -44,14 +35,9 @@ const Blog: React.FC<Props> = (props) => {
                 <a href="/equipos">Equipos</a>
                 <a href="/posiciones">Posiciones</a>
                 <a href="/resultados">Resultados</a>
-                <div className="logo-container">
                 <a  href="/"><Image  className="logo"src={logohome}  height="35" width="45" alt="Home" /></a>
-                </div>
                 <a href="/estadisticas">Estadisticas</a>
                 <a href="/router">Router Dario Salazar</a>
-                <a href="javascript:void(0);" className="icon" onClick={()=>toggleNavMenu()}>
-                 <i className="fa fa-bars"></i>
-                 </a>
                 {/* <a href="/contact">Contacto</a> */}
                 {/* <a href="#about">About</a> */}
             </div>

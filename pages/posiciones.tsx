@@ -65,10 +65,10 @@ export const getStaticProps: GetStaticProps = async () => {
   let teamCP = [];
   //recorremos gameGC y creamos teamCP para luego trabajarlo como deseamos renderizar
   gameGC.forEach(game1 => {
-    if (!teamCP.some(item => item.NTeam === game1.NTeam1 && item.category === game1.category)) {
+    if (!teamCP.some(item => item.NTeam === game1.NTeam1 && item.category === game1.category && item.GroupG === game1.GroupG)) {
       teamCP.push({ idTeam:game1.idTeam1, NTeam: game1.NTeam1, category: game1.category ,GroupG:game1.GroupG});
     }
-    if (!teamCP.some(item => item.NTeam === game1.NTeam2 && item.category === game1.category)) {
+    if (!teamCP.some(item => item.NTeam === game1.NTeam2 && item.category === game1.category && item.GroupG === game1.GroupG)) {
       teamCP.push({ idTeam:game1.idTeam2,NTeam: game1.NTeam2, category: game1.category ,GroupG:game1.GroupG});
     }
     });
@@ -76,7 +76,6 @@ export const getStaticProps: GetStaticProps = async () => {
     //Creando grupos para CLASIFICACION DE JUEGOS juegos
    // console.log(teamCP)
     const GroupG1 = [];
-    console.log( teamCP)
     teamCP.forEach(team1=> {
      // team1.GroupG === undefined? team1.GroupG='':null;
       if(!GroupG1.some(e=> e.GroupG===team1.GroupG && e.category===team1.category))
@@ -90,13 +89,18 @@ export const getStaticProps: GetStaticProps = async () => {
     //cada grupo: A Compota, B Compota semifinal Compota,
     //           Intantil A, Infantil B, Semifinal Inffantil, Final Infantil
     //           debe pasar por un ordenamiento 
-    function posicion(gameGC){
+  
+    ///GroupG1 array con objetos [{category:'COMPOTA', Group: 'B'},{}]
+    //G = GroupG1[i]
+  function orderForGroup(G){
     teamCP.forEach(team1 => {
-      let aux = { JJ: 0, JG: 0, JP: 0, CA: 0, CR: 0, 
-                  category: team1.category,
-                  GroupG: team1.GroupG  };
-     // console.log(gameGC[0])
+      let aux = { JJ: 0, JG: 0, JP: 0, CA: 0, CR: 0, category:null,GroupG:null};
+       // console.log(gameGC[0])
       gameGC.forEach(game1 => {
+       if(game1.category===G.category && game1.GroupG ===G.GroupG) {
+        aux['category']= team1.category;
+        aux['GroupG']= team1.GroupG  ;
+        if(game1.category===G.category && game1.GroupG === G.GroupG){
          if (team1.idTeam === game1.idTeam1) {
           aux.JJ += 1;
           if (game1.CTeam1 > game1.CTeam2) {
@@ -104,6 +108,14 @@ export const getStaticProps: GetStaticProps = async () => {
           } else if (game1.CTeam1 < game1.CTeam2) {
             aux.JP += 1;
           }
+          team1.JJ = aux.JJ;
+          team1.JG = aux.JG;
+          team1.JP = aux.JP;
+          team1.CA = aux.CA;
+          team1.CR = aux.CR;
+          team1.DIF= team1.JJ - team1.JG;
+          team1.category = aux.category;
+          team1.GroupG = aux.GroupG;
           aux.CA += game1.CTeam1;
           aux.CR += game1.CTeam2;
         } else if (team1.idTeam === game1.idTeam2) {
@@ -115,35 +127,42 @@ export const getStaticProps: GetStaticProps = async () => {
           }
           aux.CA += game1.CTeam2;
           aux.CR += game1.CTeam1;
-        }
-      });
+          team1.JJ = aux.JJ;
+          team1.JG = aux.JG;
+          team1.JP = aux.JP;
+          team1.CA = aux.CA;
+          team1.CR = aux.CR;
+          team1.DIF= team1.JJ - team1.JG;
+          team1.category = aux.category;
+          team1.GroupG = aux.GroupG;
+        }}
+       }});
+      });}
     
-      team1.JJ = aux.JJ;
-      team1.JG = aux.JG;
-      team1.JP = aux.JP;
-      team1.CA = aux.CA;
-      team1.CR = aux.CR;
-      team1.DIF= team1.JJ - team1.JG;
-      team1.category = aux.category;
-      team1.GroupG = aux.GroupG;
-    });
+      
+    GroupG1.forEach(G=> orderForGroup(G))
+   //console.log(GroupG1[0])
+   console.log(GroupG1)
+    //teamCP = teamCP2;
     teamCP.sort((a, b) => a.DIF - b.DIF);
-  return teamCP}
+  
     // Ahora ordeno el array por DIF
  //   console.log(teamCP)
 //console.log(teamCP.length)
 //console.log(gameGC.map(e=> e.category +'  '+e.GroupG))
 //console.log(gameGC.length)
-   teamCP = posicion(gameGC);
-    console.log(GroupG1)
-    console.log(GroupG1.length)
+//console.log(teamCP)   
+
+//console.log(teamCP)
+ //  console.log(GroupG1)
+ //   console.log(GroupG1.length)
 //    console.log(teamCP)
   //  console.log(teamCP.length)
   // console.log(teamCP.length)
 
   //console.log('feed son objetos dentro de array con length= ' +  feed.length);
   return {
-    props: JSON.parse(JSON.stringify({ user, league, team, division, game, fecha, gameGC,teamCP })),
+    props: JSON.parse(JSON.stringify({ user, league, team, division, game, fecha, gameGC,teamCP,GroupG1 })),
   };
 };
 
@@ -156,6 +175,7 @@ type Props = {
   fecha: number[];
   gameGC: PostProps[];
   teamCP:PostProps[];
+  GroupG1:PostProps[];
 };
 
 const Posiciones: React.FC<Props> = (props) => {
@@ -164,13 +184,16 @@ const Posiciones: React.FC<Props> = (props) => {
       <Nav {...props} />
       <div className="page">
         <main >
-
+        
           <p></p><div key={0} className="center">
-            <h1 > <p >Liga Dario Salazar </p></h1></div>
+            <h1 > <p >Liga Dario Salazar </p> </h1></div>
 
-          {props.division.map(D =>
+          {props.division.map(D => 
             <div className='center posiciones' key={D.idDivision}>
-{props.teamCP.some(team=> team.category===D.name)?<>
+          {   
+    props.teamCP.some(team=> team.category===D.name)?
+    
+     <>        
               <h2>{D.name}</h2>
               
               <table id={D.name} className={"table table-hover "}>
@@ -185,6 +208,8 @@ const Posiciones: React.FC<Props> = (props) => {
                     <th> DIF</th>
                     <th >CA</th>
                     <th >CR</th>
+                    <th >Category</th>
+                    <th >Group</th>
                   </tr>
                   {
                     props.teamCP.map(team1 =>
@@ -200,13 +225,15 @@ const Posiciones: React.FC<Props> = (props) => {
                           <td>{team1.JJ === team1.JG?'-':team1.DIF}</td>
                           <td>{team1.CA}</td>
                           <td> {team1.CR}</td>
+                          <td> {team1.category}</td>
+                          <td> {team1.GroupG}</td>
                         </tr> :null 
 
                     )
                   }
                 </tbody>
               </table>
-              </> :null}      </div>)}
+              </> :null }      </div>)}
 
 
         </main>

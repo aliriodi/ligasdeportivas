@@ -5,16 +5,21 @@ import Layout from "../../components/Layout"
 import { PostProps } from "../../components/Post"
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const post = {
-    id: "1",
-    title: "Prisma is the perfect ORM for Next.js",
-    content: "[Prisma](https://github.com/prisma/prisma) and Next.js go _great_ together!",
-    published: true,
-    author: {
-      name: "Nikolas Burk",
-      email: "burk@prisma.io",
-    },
-  }
+  const post = 
+    {
+      id: "1",
+      title: "Prisma is the perfect ORM for Next.js",
+      content: "[Prisma](https://github.com/prisma/prisma) and Next.js go _great_ together!",
+      published: true,
+      author: {
+        name: "Nikolas Burk",
+        email: "burk@prisma.io",
+      },
+   
+    }
+
+  //const post2 = post[parseInt(params.id)];
+console.log(params)
   return {
     props: post,
   }

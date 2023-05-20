@@ -9,7 +9,7 @@ import logohome from '../images/baseball-icon-388.png'
 import favicon from '../images/icons/favicon.ico'
 
 export const getStaticProps: GetStaticProps = async () => {
-    const prisma = new PrismaClient();
+    //const prisma = new PrismaClient();
     //const feed = await prisma.user.findMany();
 
 
@@ -36,8 +36,10 @@ const Blog: React.FC<Props> = (props) => {
                 <a href="/posiciones">Posiciones</a>
                 <a href="/resultados">Resultados</a>
                 <a  href="/"><Image  className="logo"src={logohome}  height="35" width="45" alt="Home" /></a>
+                <a href="/boxscore">BoxScore</a>
                 <a href="/estadisticas">Estadisticas</a>
-                <a href="/router">Router Dario Salazar</a>
+                <a href="/router">Router</a>
+                
                 {/* <a href="/contact">Contacto</a> */}
                 {/* <a href="#about">About</a> */}
             </div>

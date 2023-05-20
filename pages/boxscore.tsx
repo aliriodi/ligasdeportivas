@@ -26,16 +26,11 @@ const Blog: React.FC<Props> = (props) => {
       <div className="page">
         <main>
 
-          {/* {props.feed.map((post) => (
-            <div key={post.id} className="post">
-              <span>{post.idPlayer + "  " + post.firstname + " " + " " + post.lastname + " " + post.createdAt}</span>
-            </div>
-          ))} */}
+        
           <p></p><div className="center ">
           <h1 > <p >Liga Dario Salazar </p></h1></div>
            <div className="center estadisticas">
-         <p></p><h2>SE ESPERA POR DATOS PARA ESTADISTICA</h2> 
-         <p></p><h2>codigo en construccion</h2> 
+         <p></p><h2>BOX SCORE PAGINA EN CONSTRUCCCION</h2> 
           </div>
        
         </main>

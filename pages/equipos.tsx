@@ -159,7 +159,7 @@ const Blog: React.FC<Props> = (props) => {
           props.league.map(league =>
             props.division.map(division =>
               <div key={division.idDivision}>
-                <div key ={division.idDivision} className="center">{division.name}</div>
+                <div key ={division.idDivision} className="center"><h3>{division.name}</h3></div>
                 <p></p>
                 <table className="table table-hover">
                   <tbody>

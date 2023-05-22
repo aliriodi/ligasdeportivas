@@ -138,15 +138,16 @@ const Blog: React.FC<Props> = (props) => {
         
           {props.division.map(D=>
           <p>
-          <button className="btn btn-dark ">{D.name}</button>
+          <button className="btn btn-dark " onClick={()=>document.getElementById(D.name).className === "table table-hover visually-hidden" ? document.getElementById(D.name).className = 'table table-hover' :
+                document.getElementById(D.name).className = "table table-hover visually-hidden"}>{D.name}</button>
           <div key={D.idDivision}>
-                  <table key={D.idDivision} className="table table-hover">
+                  <table key={D.idDivision} id={D.name} className="table table-hover visually-hidden">
                     <tbody key={D.idDivision}>
                       {/* <!-- Aplicadas en las filas --> */}
                       {/* Fila de tipo resultados */}
                       <tr>
                         <th>Nombre</th>
-                        {props.tiporesult.map(result => <th key={result.idResult}><button onClick={() => handleSort(result.idResult)}>{result.name}</button></th>)}
+                        {props.tiporesult.map(result => <th key={result.idResult}><button className="btn btn-dark " onClick={() => handleSort(result.idResult)}>{result.name}</button></th>)}
                       </tr>
                       {/* Fila de Jugador mapeado nombre y datos  */}
                       {render.filter(p=>p.idDivision===D.idDivision).slice(0,20).map((player) => (

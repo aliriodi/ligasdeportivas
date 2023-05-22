@@ -110,6 +110,15 @@ type Props = {
 const Blog: React.FC<Props> = (props) => {
   const [IDTEAM, setIDTEAM] = useState(0);
   const [IDDIVISION, setIDDIVISION] = useState(0);
+  let aux = [];
+  props.playerFull.map(p=>aux.push(p))
+  const [render, setRender] = useState(aux);
+  const handleSort = (idResult) => {
+    const sortedPlayerFull = [...props.playerFull].sort(
+      (a, b) => b.values[idResult - 1].value - a.values[idResult - 1].value
+    );
+    setRender(sortedPlayerFull);
+  };
    return (
     <>
       <Nav {...props} />
@@ -136,10 +145,10 @@ const Blog: React.FC<Props> = (props) => {
                       {/* Fila de tipo resultados */}
                       <tr>
                         <th>Nombre</th>
-                        {props.tiporesult.map(result => <th key={result.idResult}>{result.name}</th>)}
+                        {props.tiporesult.map(result => <th key={result.idResult}><button onClick={() => handleSort(result.idResult)}>{result.name}</button></th>)}
                       </tr>
                       {/* Fila de Jugador mapeado nombre y datos  */}
-                      {props.playerFull.filter(p=>p.idDivision===D.idDivision).slice(0,20).map((player) => (
+                      {render.filter(p=>p.idDivision===D.idDivision).slice(0,20).map((player) => (
                         //Metodo de empezar a escribir una Fila por participante y en 1era coolumna su nombre
                         player.idDivision === D.idDivision ? <tr key={player.idPlayer} className="active"><td>{player.firstname + "  " + player.lastname}</td>
                           {/* Mapeando los idResult primero, luego a la tabla  */}

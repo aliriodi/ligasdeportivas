@@ -187,6 +187,7 @@ const Posiciones: React.FC<Props> = (props) => {
         : [...prevHiddenCategories, category]
     );
   };
+ 
   return (
     <div key={'cero'}>
       <Nav {...props} />

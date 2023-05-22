@@ -113,9 +113,9 @@ const Blog: React.FC<Props> = (props) => {
   let aux = [];
   props.playerFull.map(p=>aux.push(p))
   const [render, setRender] = useState(aux);
-  const handleSort = (idResult) => {
+  const handleSort = (idResult:number) => {
     const sortedPlayerFull = [...props.playerFull].sort(
-      (a, b) => b.values[idResult - 1].value - a.values[idResult - 1].value
+      (a, b) => b['values'][idResult - 1]?.value - a['values'][idResult - 1]?.value
     );
     setRender(sortedPlayerFull);
   };

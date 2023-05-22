@@ -84,10 +84,7 @@ export const getStaticProps: GetStaticProps = async () => {
                              )
   //ordeno por AVE los resultados
   playerFull.sort((b,a)=>a['values'][14].value-b['values'][14].value)                            
-  console.log(playerFull.map(j=>  j['values'][14]))
-                              
-
-  return {
+   return {
     props: JSON.parse(JSON.stringify({
       player,
       team,
@@ -133,20 +130,20 @@ const Blog: React.FC<Props> = (props) => {
           <p>
           <button className="btn btn-dark ">{D.name}</button>
           <div key={D.idDivision}>
-                  <table className="table table-hover">
-                    <tbody>
+                  <table key={D.idDivision} className="table table-hover">
+                    <tbody key={D.idDivision}>
                       {/* <!-- Aplicadas en las filas --> */}
                       {/* Fila de tipo resultados */}
                       <tr>
                         <th>Nombre</th>
-                        {props.tiporesult.map(result => <th>{result.name}</th>)}
+                        {props.tiporesult.map(result => <th key={result.idResult}>{result.name}</th>)}
                       </tr>
                       {/* Fila de Jugador mapeado nombre y datos  */}
                       {props.playerFull.filter(p=>p.idDivision===D.idDivision).slice(0,20).map((player) => (
                         //Metodo de empezar a escribir una Fila por participante y en 1era coolumna su nombre
-                        player.idDivision === D.idDivision ? <tr className="active"><td>{player.firstname + "  " + player.lastname}</td>
+                        player.idDivision === D.idDivision ? <tr key={player.idPlayer} className="active"><td>{player.firstname + "  " + player.lastname}</td>
                           {/* Mapeando los idResult primero, luego a la tabla  */}
-                          {player.values.map(tiporesult => <td>{
+                          {player.values.map(tiporesult => <td >{
                           
                           tiporesult['value']? tiporesult['value'] : 0}</td>)}</tr> : null))}
                      

@@ -98,7 +98,7 @@ export const getStaticProps: GetStaticProps = async () => {
     //Team = {NTeam,                          GroupG, category}
     
     teamCP.map(team1 => {
-      let aux = { JJ: 0, JG: 0, JP: 0, CA: 0, CR: 0, category:null,GroupG:null};
+      let aux = { JJ: 0, JG: 0, JP: 0, CA: 0, CR: 0, category:null,GroupG:null,Date:null};
        // console.log(gameGC[0])
       gameGC.map(game1 => {
        if((game1.category===team1.category && game1.GroupG ===team1.GroupG )&& 
@@ -113,6 +113,7 @@ export const getStaticProps: GetStaticProps = async () => {
         }
           aux.CA += game1.CTeam1;
           aux.CR += game1.CTeam2;
+          aux.Date = game1.Date;
         } else if (team1.idTeam === game1.idTeam2) {
           aux.JJ += 1;
          if (game1.CTeam2 > game1.CTeam1) {
@@ -122,8 +123,10 @@ export const getStaticProps: GetStaticProps = async () => {
           }
           aux.CA += game1.CTeam2;
           aux.CR += game1.CTeam1;
+          aux.Date = game1.Date;
          }
        } 
+       team1.Date = aux.Date;
        team1.JJ = aux.JJ;
        team1.JP = aux.JP;
        team1.JG = aux.JG;
@@ -137,12 +140,14 @@ export const getStaticProps: GetStaticProps = async () => {
    //console.log(GroupG1[0])
   // console.log(GroupG1)
     //teamCP = teamCP2;
-    
+ 
+   // console.log(teamCP)
     //Ordenando por CA-CR && DIF && GroupG
     teamCP.sort((b,a)  =>(a.CA-a.CR)-(b.CA-b.CR))
           .sort((a, b) =>   a.DIF   -  b.DIF)
           .sort((b, a) => a.GroupG.localeCompare(b.GroupG));
   
+   //       console.log(GroupG1)
     // Ahora ordeno el array por DIF
  //   console.log(teamCP)
 //console.log(teamCP.length)
@@ -205,7 +210,7 @@ const Posiciones: React.FC<Props> = (props) => {
             G.category===D.name && props.teamCP.some(team=> team.GroupG===G.GroupG)?
             
              <div id={D.name} className={hiddenCategories.includes(D.name) ?'' :  'visually-hidden'} key={G.GroupG+G.category}> 
-              <h3  id={D.name}  className={""} key={D.name}>{G.category +' '+ G.GroupG}</h3>
+              <h3  id={D.name}  className={""} key={D.name}>{G.category +' '} {G.GroupG==='ZFINAL'?'FINAL':G.GroupG}</h3>
               
               <table id={D.name} key={D.name+'table'} className={"table table-hover "}>
                 <tbody  key={D.name+'tbody'} >
@@ -229,7 +234,7 @@ const Posiciones: React.FC<Props> = (props) => {
                       team1.category===D.name && team1.GroupG===G.GroupG ?
                         <tr key={team1.idTeam}>
                           {/* <td>{team1.category} </td> */}
-                          <td>{team1.NTeam}</td>
+                          <td>{team1.NTeam==='TIG B'?'TIGRITOS B':team1.NTeam}</td>
                           <td>{team1.JJ} </td>
                           <td>{team1.JG}</td>
                           <td>{team1.JP}</td>

@@ -60,11 +60,11 @@ const Blog: React.FC<Props> = (props) => {
       <div className="page">
         <main >
 
-          {/* {props.user.map((post) => (
+          {props.user.map((post) => (
             <div key={post.id} className="post">
               <span key={post.id+1}>{post.idPlayer + "  " + post.firstname + " " + " " + post.lastname + " " + post.createdAt}</span>
             </div>
-          ))} */}
+          ))}
           <p></p><div key={0} className="center">
             <h1 > <p >Liga Dario Salazar </p></h1></div>
 

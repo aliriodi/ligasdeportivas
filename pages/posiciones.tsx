@@ -159,7 +159,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
   //console.log('feed son objetos dentro de array con length= ' +  feed.length);
   return {
-    props: JSON.parse(JSON.stringify({ user, league, team, division, game, fecha, gameGC,teamCP,GroupG1 })),
+    props: JSON.parse(JSON.stringify({ user, league, team, division, gameGC,teamCP,GroupG1 })),
   };
 };
 
@@ -167,9 +167,7 @@ type Props = {
   user: PostProps[];
   league: PostProps[];
   team: PostProps[];
-  game: PostProps[];
   division: PostProps[];
-  fecha: number[];
   gameGC: PostProps[];
   teamCP:PostProps[];
   GroupG1:PostProps[];

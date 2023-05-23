@@ -154,7 +154,7 @@ const Blog: React.FC<Props> = (props) => {
           <p>
           {/* <>{'Division: '+IDDIVISION}</><>{'FILTRO: '+IDFILTER}</> */}
           
-          <div key={D.idDivision}>
+          <div key={D.idDivision} className="center estadisticas">
                   <table key={D.idDivision} id={D.name} className="table table-hover ">
                     <tbody key={D.idDivision}>
                       {/* <!-- Aplicadas en las filas --> */}

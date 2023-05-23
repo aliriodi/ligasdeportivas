@@ -109,7 +109,7 @@ type Props = {
 const Blog: React.FC<Props> = (props) => {
   const [IDTEAM, setIDTEAM] = useState(0);
   const [IDDIVISION, setIDDIVISION] = useState(0);
-  const [IDFILTER, setIDFILTER] = useState(15);
+  const [IDFILTER, setIDFILTER] = useState(0);
   let aux = [];
   props.playerFull.map(p=>aux.push(p))
   const [render, setRender] = useState(aux);
@@ -142,7 +142,7 @@ const Blog: React.FC<Props> = (props) => {
         </select>
         <>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</> 
         <select className="custom-select btn btn-dark" id="input2" onChange={()=>setIDFILTER(parseInt((document.getElementById("input2")as HTMLInputElement).value))} >
-            <option key={0} value={15}>Seleccione Filtro</option>
+            <option key={0} value={0}>Seleccione Filtro</option>
             {props.tiporesult.map(
               tiporesult => <option key={tiporesult.idResult} value={tiporesult.idResult}>{tiporesult.name}</option>
             )}
@@ -150,7 +150,7 @@ const Blog: React.FC<Props> = (props) => {
         </form>
          
           {props.division.map(D=>
-          D.idDivision===IDDIVISION?
+          D.idDivision===IDDIVISION && IDFILTER!==0?
           <p>
           {/* <>{'Division: '+IDDIVISION}</><>{'FILTRO: '+IDFILTER}</> */}
           
@@ -167,7 +167,9 @@ const Blog: React.FC<Props> = (props) => {
                         <th key={result.idResult}><button className="btn btn-dark " >{result.name}</button></th>:null)}
                       </tr>
                       {/* Fila de Jugador mapeado nombre y datos  */}
-                      {render.sort((a,b)=>b['values'][IDFILTER-1].value - a['values'][IDFILTER -1].value).filter(p=>p.idDivision===IDDIVISION).slice(0,19).map((player) => (
+                      {
+                      IDFILTER!==0?
+                      render.sort((a,b)=>b['values'][IDFILTER-1].value - a['values'][IDFILTER -1].value).filter(p=>p.idDivision===IDDIVISION).slice(0,19).map((player) => (
                         //Metodo de empezar a escribir una Fila por participante y en 1era coolumna su nombre
                         player.idDivision === D.idDivision ? <tr key={player.idPlayer} className="active">
                           <td>{player.firstname + "  " + player.lastname}</td>
@@ -176,7 +178,7 @@ const Blog: React.FC<Props> = (props) => {
                           {player.values.map(tiporesult => 
                           tiporesult['idResult']===IDFILTER?
                           <td >{
-                           tiporesult['value']? tiporesult['value'] : 0}</td>:null)}</tr> : null))}
+                           tiporesult['value']? tiporesult['value'] : 0}</td>:null)}</tr> : null)) :null}
                        
                     </tbody>
                   </table>

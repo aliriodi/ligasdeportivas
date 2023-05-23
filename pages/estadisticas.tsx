@@ -1,5 +1,4 @@
-import React from "react"
-import { useState } from 'react';
+import React, { useEffect, useState } from "react";
 import { GetStaticProps } from "next"
 import Nav from "../components/Nav"
 import Post, { PostProps } from "../components/Post"
@@ -110,16 +109,18 @@ type Props = {
 const Blog: React.FC<Props> = (props) => {
   const [IDTEAM, setIDTEAM] = useState(0);
   const [IDDIVISION, setIDDIVISION] = useState(0);
+  const [IDFILTER, setIDFILTER] = useState(15);
   let aux = [];
   props.playerFull.map(p=>aux.push(p))
   const [render, setRender] = useState(aux);
-  const handleSort = (idResult:number) => {
-    const sortedPlayerFull = [...render].sort(
-      (a, b) => b['values'][idResult-1].value - a['values'][idResult -1].value
-    );
-    console.log(render)
-    setRender(sortedPlayerFull);
-  };
+  // const handleSort = (idResult:number) => {
+  //   const sortedPlayerFull = [...render].sort(
+  //     (a, b) => b['values'][idResult-1].value - a['values'][idResult -1].value
+  //   );
+  // //  console.log(render)
+      
+  // };
+ 
    return (
     <>
       <Nav {...props} />
@@ -132,36 +133,55 @@ const Blog: React.FC<Props> = (props) => {
         <p></p>
         <main>
         <div className="center">
-          {/* <p><button type="button"  onClick={()=>setIDTEAM(IDTEAM===50?0:IDTEAM+1)} className="btn btn-primary">Primary</button></p> */}
-          {/* {props.league.map(p => <span>{'Liga ' + p.idLeague + " " + p.name}</span>)} */}
-          {/* <p>{IDTEAM}{IDDIVISION}</p> */}
-        
+        <form className="custom-form">
+        <select className="custom-select btn btn-dark" id="input3" onChange={()=>setIDDIVISION(parseInt((document.getElementById("input3")as HTMLInputElement).value)) } >
+            <option key={0} value="0">Seleccione Division</option>
+            {props.division.map(
+              division => <option key={division.idDivision} value={division.idDivision}>{division.name}</option>
+            )}
+        </select>
+        <>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</> 
+        <select className="custom-select btn btn-dark" id="input2" onChange={()=>setIDFILTER(parseInt((document.getElementById("input2")as HTMLInputElement).value))} >
+            <option key={0} value={15}>Seleccione Filtro</option>
+            {props.tiporesult.map(
+              tiporesult => <option key={tiporesult.idResult} value={tiporesult.idResult}>{tiporesult.name}</option>
+            )}
+        </select>
+        </form>
+         
           {props.division.map(D=>
+          D.idDivision===IDDIVISION?
           <p>
-          <button className="btn btn-dark " onClick={()=>document.getElementById(D.name).className === "table table-hover visually-hidden" ? document.getElementById(D.name).className = 'table table-hover' :
-                document.getElementById(D.name).className = "table table-hover visually-hidden"}>{D.name}</button>
+          {/* <>{'Division: '+IDDIVISION}</><>{'FILTRO: '+IDFILTER}</> */}
+          
           <div key={D.idDivision}>
-                  <table key={D.idDivision} id={D.name} className="table table-hover visually-hidden">
+                  <table key={D.idDivision} id={D.name} className="table table-hover ">
                     <tbody key={D.idDivision}>
                       {/* <!-- Aplicadas en las filas --> */}
                       {/* Fila de tipo resultados */}
                       <tr>
                         <th>Nombre</th>
-                        {props.tiporesult.map(result => <th key={result.idResult}><button className="btn btn-dark " onClick={() => handleSort(result.idResult)}>{result.name}</button></th>)}
+                        <th>Equipo</th>
+                        {props.tiporesult.map(result => 
+                          result['idResult']===IDFILTER?
+                        <th key={result.idResult}><button className="btn btn-dark " >{result.name}</button></th>:null)}
                       </tr>
                       {/* Fila de Jugador mapeado nombre y datos  */}
-                      {render.filter(p=>p.idDivision===D.idDivision).slice(0,20).map((player) => (
+                      {render.sort((a,b)=>b['values'][IDFILTER-1].value - a['values'][IDFILTER -1].value).filter(p=>p.idDivision===IDDIVISION).slice(0,19).map((player) => (
                         //Metodo de empezar a escribir una Fila por participante y en 1era coolumna su nombre
-                        player.idDivision === D.idDivision ? <tr key={player.idPlayer} className="active"><td>{player.firstname + "  " + player.lastname}</td>
+                        player.idDivision === D.idDivision ? <tr key={player.idPlayer} className="active">
+                          <td>{player.firstname + "  " + player.lastname}</td>
+                          <td>{player.Nteam}</td>
                           {/* Mapeando los idResult primero, luego a la tabla  */}
-                          {player.values.map(tiporesult => <td >{
-                          
-                          tiporesult['value']? tiporesult['value'] : 0}</td>)}</tr> : null))}
-                     
+                          {player.values.map(tiporesult => 
+                          tiporesult['idResult']===IDFILTER?
+                          <td >{
+                           tiporesult['value']? tiporesult['value'] : 0}</td>:null)}</tr> : null))}
+                       
                     </tbody>
                   </table>
                 </div>
-          </p>
+          </p>:null
           )  }
           </div>
          
